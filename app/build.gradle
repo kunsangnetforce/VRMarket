@@ -34,4 +34,5 @@ dependencies {
     compile 'com.balysv:material-ripple:1.0.2'
     compile 'com.weiwangcn.betterspinner:library-material:1.1.0'
     compile 'com.github.orangegangsters:swipy:1.2.3@aar'
+    compile 'com.github.arimorty:floatingsearchview:2.0.1'
 }
