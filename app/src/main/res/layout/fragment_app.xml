@@ -17,6 +17,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:weightSum="100">
@@ -85,6 +86,7 @@
                         android:layout_gravity="right"
                         android:dropDownWidth="150dp"
                         android:gravity="right"
+                        android:hint="@string/category"
                         android:textSize="12sp" />
 
                 </LinearLayout>
@@ -98,10 +100,11 @@
 
                     <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
                         android:id="@+id/latest"
-                        android:gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:dropDownWidth="150dp"
+                        android:gravity="center"
+                        android:hint="@string/sort"
                         android:textSize="12sp" />
 
                 </LinearLayout>
@@ -115,10 +118,11 @@
 
                     <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
                         android:id="@+id/free"
-                        android:gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:dropDownWidth="150dp"
+                        android:gravity="center"
+                        android:hint="@string/price"
                         android:textSize="12sp" />
 
                 </LinearLayout>
@@ -130,13 +134,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp">
 
-                <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:id="@+id/recyclerCommom"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/recyclerCommom"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-                </android.support.v7.widget.RecyclerView>
-
+                    </android.support.v7.widget.RecyclerView>
             </LinearLayout>
         </LinearLayout>
 

@@ -6,12 +6,13 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
 import android.widget.LinearLayout;
-
+import android.widget.Toast;
 import com.netforceinfotech.vrmarket.R;
 import com.netforceinfotech.vrmarket.dashboard.game.commom.RecyclerViewAdapterC;
 import com.netforceinfotech.vrmarket.dashboard.game.commom.RowDataC;
@@ -38,8 +39,9 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     private MaterialBetterSpinner category, free, latest;
     private RecyclerView recyclerView_Commom;
     private RecyclerViewAdapterC adapterCommom;
-    private ArrayList<RowDataC> rowDatasCC =new ArrayList<>();
+    private ArrayList<RowDataC> rowDatasCC = new ArrayList<>();
     private LinearLayoutManager layoutManagerCommom;
+   // private SwipyRefreshLayout mSwipyRefreshLayout;
 
     public GameFragment() {
         // Required empty public constructor
@@ -52,9 +54,17 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
 
         context = getActivity();
-        view = inflater.inflate(R.layout.fragment_app, container, false);
+        view = inflater.inflate(R.layout.fragment_game, container, false);
         linearLayoutLeft = (LinearLayout) view.findViewById(R.id.linearLeft);
         linearLayoutRight = (LinearLayout) view.findViewById(R.id.linearRight);
+      /*  mSwipyRefreshLayout = (SwipyRefreshLayout) view.findViewById(R.id.swipyrefreshlayout);
+        mSwipyRefreshLayout.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh(SwipyRefreshLayoutDirection direction) {
+                showMessage("triggered");
+                mSwipyRefreshLayout.setRefreshing(false);
+            }
+        });*/
         linearLayoutRight.setOnClickListener(this);
         linearLayoutLeft.setOnClickListener(this);
         setupRecycleFeatured();
@@ -64,23 +74,27 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
     }
 
+    private void showMessage(String s) {
+        Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
+    }
+
     private void setupDropDown(View view) {
         String[] categoryList = {"All Category", "Category 1", "Category 2", "Category 3", "Category 4"};
         String[] sortbyList = {"Latest", "Alphabet", "App size", "Popularity", "Most Downloaded"};
-        String[] filterPricListe = {"Free", "Paid"};
+        String[] filterPricListe = {"Free", "Paid", "All"};
         MyCustomAdapter adapter1 = new MyCustomAdapter(getActivity(), R.layout.spinner_text_layout, categoryList);
         MyCustomAdapter adapter2 = new MyCustomAdapter(getActivity(), R.layout.spinner_text_layout, sortbyList);
         MyCustomAdapter adapter3 = new MyCustomAdapter(getActivity(), R.layout.spinner_text_layout, filterPricListe);
         category = (MaterialBetterSpinner) view.findViewById(R.id.category);
         category.setAdapter(adapter1);
-        category.setText(adapter1.getItem(0));
+        category.setHint(getResources().getString(R.string.category));
 
         latest = (MaterialBetterSpinner) view.findViewById(R.id.latest);
         latest.setAdapter(adapter2);
-        latest.setText(adapter2.getItem(0));
+        latest.setHint(getResources().getString(R.string.sort));
         free = (MaterialBetterSpinner) view.findViewById(R.id.free);
         free.setAdapter(adapter3);
-        free.setText(adapter3.getItem(0));
+        free.setHint(getResources().getString(R.string.price));
 
     }
 
