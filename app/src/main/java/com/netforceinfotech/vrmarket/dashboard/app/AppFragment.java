@@ -67,20 +67,20 @@ public class AppFragment extends Fragment implements View.OnClickListener {
     private void setupDropDown(View view) {
         String[] categoryList = {"All Category", "Category 1", "Category 2", "Category 3", "Category 4"};
         String[] sortbyList = {"Latest", "Alphabet", "App size", "Popularity", "Most Downloaded"};
-        String[] filterPricListe = {"Free", "Paid"};
+        String[] filterPricListe = {"Free", "Paid","All"};
         MyCustomAdapter adapter1 = new MyCustomAdapter(getActivity(), R.layout.spinner_text_layout, categoryList);
         MyCustomAdapter adapter2 = new MyCustomAdapter(getActivity(), R.layout.spinner_text_layout, sortbyList);
         MyCustomAdapter adapter3 = new MyCustomAdapter(getActivity(), R.layout.spinner_text_layout, filterPricListe);
         category = (MaterialBetterSpinner) view.findViewById(R.id.category);
         category.setAdapter(adapter1);
-        category.setText(adapter1.getItem(0));
+        category.setHint(getResources().getString(R.string.category));
 
         latest = (MaterialBetterSpinner) view.findViewById(R.id.latest);
         latest.setAdapter(adapter2);
-        latest.setText(adapter2.getItem(0));
+        latest.setHint(getResources().getString(R.string.sort));
         free = (MaterialBetterSpinner) view.findViewById(R.id.free);
         free.setAdapter(adapter3);
-        free.setText(adapter3.getItem(0));
+        free.setHint(getResources().getString(R.string.price));
 
     }
 

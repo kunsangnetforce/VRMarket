@@ -1,7 +1,7 @@
 package com.netforceinfotech.vrmarket.dashboard;
 
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -10,16 +10,14 @@ import android.view.View;
 
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
-import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
-import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.netforceinfotech.vrmarket.R;
-import com.netforceinfotech.vrmarket.dashboard.general.CustomViewPager;
 
 public class Dashboard extends AppCompatActivity {
 
     private Toolbar toolbar;
+    private DashboardFragment dashboardFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,37 +25,16 @@ public class Dashboard extends AppCompatActivity {
         setContentView(R.layout.activity_dashboard);
         setupToolBar();
         setupNavigationDrawer();
-        setupTab();
+        setupDashboard();
 
     }
-    private void setupTab() {
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText("Apps"));
-        tabLayout.addTab(tabLayout.newTab().setText("Games"));
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        final CustomViewPager viewPager = (CustomViewPager) findViewById(R.id.pager);
-        viewPager.setPagingEnabled(false);
-        final PagerAdapter adapter = new PagerAdapter
-                (getSupportFragmentManager(), tabLayout.getTabCount());
-        viewPager.setAdapter(adapter);
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-            }
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
+    private void setupToolBar() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
     private void setupNavigationDrawer() {
         PrimaryDrawerItem home = new PrimaryDrawerItem().withName(R.string.home);
@@ -79,21 +56,22 @@ public class Dashboard extends AppCompatActivity {
                 })
                 .build();
     }
-
-    private void setupToolBar() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        String teams = "Home";
-        getSupportActionBar().setTitle(teams);
-
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search, menu);
         return true;
     }
+    private void replaceFragment(Fragment newFragment, String tag) {
 
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment, newFragment, tag);
+        transaction.commit();
+    }
+    private void setupDashboard() {
+        if (dashboardFragment == null) {
+            dashboardFragment = new DashboardFragment();
+        }
+        String tagName = dashboardFragment.getClass().getName();
+        replaceFragment(dashboardFragment, tagName);
+    }
 }
