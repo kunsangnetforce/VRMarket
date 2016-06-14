@@ -40,7 +40,7 @@
                     android:layout_weight="80">
 
                     <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-                        android:id="@+id/recycler"
+                        android:id="@+id/recyclerFeatured"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
@@ -80,9 +80,10 @@
 
                     <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
                         android:id="@+id/category"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
+                        android:dropDownWidth="150dp"
                         android:gravity="right"
                         android:textSize="12sp" />
 
@@ -97,8 +98,10 @@
 
                     <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
                         android:id="@+id/latest"
+                        android:gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:dropDownWidth="150dp"
                         android:textSize="12sp" />
 
                 </LinearLayout>
@@ -112,13 +115,29 @@
 
                     <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
                         android:id="@+id/free"
+                        android:gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:dropDownWidth="150dp"
                         android:textSize="12sp" />
 
                 </LinearLayout>
             </LinearLayout>
 
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp">
+
+                <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/recyclerCommom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </android.support.v7.widget.RecyclerView>
+
+            </LinearLayout>
         </LinearLayout>
 
     </ScrollView>

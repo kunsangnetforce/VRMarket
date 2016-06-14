@@ -1,4 +1,4 @@
-package com.netforceinfotech.vrmarket.dashboard.app;
+package com.netforceinfotech.vrmarket.dashboard.game;
 
 
 import android.content.Context;
@@ -13,10 +13,10 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.LinearLayout;
 
 import com.netforceinfotech.vrmarket.R;
-import com.netforceinfotech.vrmarket.dashboard.app.commom.RecyclerViewAdapterC;
-import com.netforceinfotech.vrmarket.dashboard.app.commom.RowDataC;
-import com.netforceinfotech.vrmarket.dashboard.app.featured.RecyclerViewAdapterF;
-import com.netforceinfotech.vrmarket.dashboard.app.featured.RowDataF;
+import com.netforceinfotech.vrmarket.dashboard.game.commom.RecyclerViewAdapterC;
+import com.netforceinfotech.vrmarket.dashboard.game.commom.RowDataC;
+import com.netforceinfotech.vrmarket.dashboard.game.featured.RecyclerViewAdapterF;
+import com.netforceinfotech.vrmarket.dashboard.game.featured.RowDataF;
 import com.netforceinfotech.vrmarket.dashboard.general.MyCustomAdapter;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
@@ -27,7 +27,7 @@ import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AppFragment extends Fragment implements View.OnClickListener {
+public class GameFragment extends Fragment implements View.OnClickListener {
     LinearLayout linearLayoutLeft, linearLayoutRight;
     private LinearLayoutManager layoutManagerFeatured;
     private Context context;
@@ -41,7 +41,7 @@ public class AppFragment extends Fragment implements View.OnClickListener {
     private ArrayList<RowDataC> rowDatasCC =new ArrayList<>();
     private LinearLayoutManager layoutManagerCommom;
 
-    public AppFragment() {
+    public GameFragment() {
         // Required empty public constructor
     }
 

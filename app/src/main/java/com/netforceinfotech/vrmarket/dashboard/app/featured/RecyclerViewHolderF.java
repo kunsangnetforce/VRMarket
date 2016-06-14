@@ -1,4 +1,4 @@
-package com.netforceinfotech.vrmarket.dashboard.app;
+package com.netforceinfotech.vrmarket.dashboard.app.featured;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -10,13 +10,13 @@ import com.netforceinfotech.vrmarket.R;
 /**
  * Created by Gowtham Chandrasekar on 31-07-2015.
  */
-public class RecyclerViewHolder extends RecyclerView.ViewHolder {
+public class RecyclerViewHolderF extends RecyclerView.ViewHolder {
 
     View view;
     TextView textView;
 
 
-    public RecyclerViewHolder(View itemView) {
+    public RecyclerViewHolderF(View itemView) {
         super(itemView);
         //implementing onClickListener
         view = itemView;
