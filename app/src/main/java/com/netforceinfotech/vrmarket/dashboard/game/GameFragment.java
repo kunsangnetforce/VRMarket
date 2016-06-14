@@ -13,12 +13,15 @@ import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
 import com.netforceinfotech.vrmarket.R;
 import com.netforceinfotech.vrmarket.dashboard.game.commom.RecyclerViewAdapterC;
 import com.netforceinfotech.vrmarket.dashboard.game.commom.RowDataC;
 import com.netforceinfotech.vrmarket.dashboard.game.featured.RecyclerViewAdapterF;
 import com.netforceinfotech.vrmarket.dashboard.game.featured.RowDataF;
 import com.netforceinfotech.vrmarket.dashboard.general.MyCustomAdapter;
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.util.ArrayList;
@@ -41,7 +44,8 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     private RecyclerViewAdapterC adapterCommom;
     private ArrayList<RowDataC> rowDatasCC = new ArrayList<>();
     private LinearLayoutManager layoutManagerCommom;
-   // private SwipyRefreshLayout mSwipyRefreshLayout;
+    private SwipyRefreshLayout mSwipyRefreshLayout;
+    // private SwipyRefreshLayout mSwipyRefreshLayout;
 
     public GameFragment() {
         // Required empty public constructor
@@ -57,14 +61,14 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         view = inflater.inflate(R.layout.fragment_game, container, false);
         linearLayoutLeft = (LinearLayout) view.findViewById(R.id.linearLeft);
         linearLayoutRight = (LinearLayout) view.findViewById(R.id.linearRight);
-      /*  mSwipyRefreshLayout = (SwipyRefreshLayout) view.findViewById(R.id.swipyrefreshlayout);
+        mSwipyRefreshLayout = (SwipyRefreshLayout) view.findViewById(R.id.swipyrefreshlayout);
         mSwipyRefreshLayout.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh(SwipyRefreshLayoutDirection direction) {
                 showMessage("triggered");
                 mSwipyRefreshLayout.setRefreshing(false);
             }
-        });*/
+        });
         linearLayoutRight.setOnClickListener(this);
         linearLayoutLeft.setOnClickListener(this);
         setupRecycleFeatured();

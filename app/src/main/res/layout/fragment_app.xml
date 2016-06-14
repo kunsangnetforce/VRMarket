@@ -5,143 +5,145 @@
     android:layout_height="match_parent"
     tools:context=".dashboard.app.AppFragment">
 
-    <ScrollView
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginTop="6dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="100">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:id="@+id/linearLeft"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:weightSum="100">
+                android:layout_weight="10">
 
-                <LinearLayout
-                    android:id="@+id/linearLeft"
-                    android:layout_width="0dp"
+                <ImageView
+                    android:id="@+id/imageViewLeft"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="10">
-
-                    <ImageView
-                        android:id="@+id/imageViewLeft"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_chevron_left" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="80">
-
-                    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-                        android:id="@+id/recyclerFeatured"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                    </android.support.v7.widget.RecyclerView>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/linearRight"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="10">
-
-                    <ImageView
-                        android:id="@+id/imageViewRight"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_chevron_right" />
-
-                </LinearLayout>
+                    android:src="@drawable/ic_chevron_left" />
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:weightSum="150">
+                android:layout_weight="80">
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="50"
-                    android:gravity="center"
-                    android:orientation="horizontal">
+                <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/recyclerFeatured"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-                        android:id="@+id/category"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:dropDownWidth="150dp"
-                        android:gravity="right"
-                        android:hint="@string/category"
-                        android:textSize="12sp" />
+                </android.support.v7.widget.RecyclerView>
 
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="50"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-                        android:id="@+id/latest"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:dropDownWidth="150dp"
-                        android:gravity="center"
-                        android:hint="@string/sort"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="50"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-                        android:id="@+id/free"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:dropDownWidth="150dp"
-                        android:gravity="center"
-                        android:hint="@string/price"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
             </LinearLayout>
 
-
             <LinearLayout
-                android:layout_width="match_parent"
+                android:id="@+id/linearRight"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp">
+                android:layout_weight="10">
 
-                    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-                        android:id="@+id/recyclerCommom"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/imageViewRight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_chevron_right" />
 
-                    </android.support.v7.widget.RecyclerView>
             </LinearLayout>
         </LinearLayout>
 
-    </ScrollView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:weightSum="150">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                    android:id="@+id/category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:dropDownWidth="150dp"
+                    android:gravity="right"
+                    android:hint="@string/category"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                    android:id="@+id/latest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:dropDownWidth="150dp"
+                    android:gravity="center"
+                    android:hint="@string/sort"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                    android:id="@+id/free"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:dropDownWidth="150dp"
+                    android:gravity="center"
+                    android:hint="@string/price"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical">
+
+            <com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
+                android:id="@+id/swipyrefreshlayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerCommom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
 </FrameLayout>
