@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.netforceinfotech.vrmarket.R;
 import com.netforceinfotech.vrmarket.dashboard.app.commom.RecyclerViewAdapterC;
@@ -38,8 +39,9 @@ public class AppFragment extends Fragment implements View.OnClickListener {
     private MaterialBetterSpinner category, free, latest;
     private RecyclerView recyclerView_Commom;
     private RecyclerViewAdapterC adapterCommom;
-    private ArrayList<RowDataC> rowDatasCC =new ArrayList<>();
+    private ArrayList<RowDataC> rowDatasCC = new ArrayList<>();
     private LinearLayoutManager layoutManagerCommom;
+   // private SwipyRefreshLayout mSwipyRefreshLayout;
 
     public AppFragment() {
         // Required empty public constructor
@@ -55,6 +57,14 @@ public class AppFragment extends Fragment implements View.OnClickListener {
         view = inflater.inflate(R.layout.fragment_app, container, false);
         linearLayoutLeft = (LinearLayout) view.findViewById(R.id.linearLeft);
         linearLayoutRight = (LinearLayout) view.findViewById(R.id.linearRight);
+        /*mSwipyRefreshLayout = (SwipyRefreshLayout) view.findViewById(R.id.swipyrefreshlayout);
+        mSwipyRefreshLayout.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh(SwipyRefreshLayoutDirection direction) {
+                showMessage("triggered");
+                mSwipyRefreshLayout.setRefreshing(false);
+            }
+        });*/
         linearLayoutRight.setOnClickListener(this);
         linearLayoutLeft.setOnClickListener(this);
         setupRecycleFeatured();
@@ -64,10 +74,14 @@ public class AppFragment extends Fragment implements View.OnClickListener {
 
     }
 
+    private void showMessage(String s) {
+        Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
+    }
+
     private void setupDropDown(View view) {
         String[] categoryList = {"All Category", "Category 1", "Category 2", "Category 3", "Category 4"};
         String[] sortbyList = {"Latest", "Alphabet", "App size", "Popularity", "Most Downloaded"};
-        String[] filterPricListe = {"Free", "Paid","All"};
+        String[] filterPricListe = {"Free", "Paid", "All"};
         MyCustomAdapter adapter1 = new MyCustomAdapter(getActivity(), R.layout.spinner_text_layout, categoryList);
         MyCustomAdapter adapter2 = new MyCustomAdapter(getActivity(), R.layout.spinner_text_layout, sortbyList);
         MyCustomAdapter adapter3 = new MyCustomAdapter(getActivity(), R.layout.spinner_text_layout, filterPricListe);
