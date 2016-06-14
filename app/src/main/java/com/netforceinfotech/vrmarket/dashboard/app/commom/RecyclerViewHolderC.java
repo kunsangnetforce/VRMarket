@@ -2,8 +2,11 @@ package com.netforceinfotech.vrmarket.dashboard.app.commom;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.balysv.materialripple.MaterialRippleLayout;
 import com.netforceinfotech.vrmarket.R;
 
 /**
@@ -11,15 +14,18 @@ import com.netforceinfotech.vrmarket.R;
  */
 public class RecyclerViewHolderC extends RecyclerView.ViewHolder {
 
-    View view;
-    TextView textView;
-
+    LinearLayout linearLayoutInfo,linearLayoutIcon;
+    ImageView imageViewDownload;
+    MaterialRippleLayout materialRippleLayoutDownload,materialRippleLayoutInfo;
 
     public RecyclerViewHolderC(View itemView) {
         super(itemView);
         //implementing onClickListener
-        view = itemView;
-        textView= (TextView) view.findViewById(R.id.textView);
+        imageViewDownload= (ImageView) itemView.findViewById(R.id.imageViewDownload);
+        linearLayoutIcon= (LinearLayout) itemView.findViewById(R.id.linearIcon);
+        linearLayoutInfo= (LinearLayout) itemView.findViewById(R.id.linearInfo);
+        materialRippleLayoutDownload= (MaterialRippleLayout) itemView.findViewById(R.id.rippleDownload);
+        materialRippleLayoutInfo= (MaterialRippleLayout) itemView.findViewById(R.id.rippleInfo);
 
     }
 

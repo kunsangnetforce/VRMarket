@@ -12,4 +12,5 @@
     <string name="category">Category</string>
     <string name="sort">Sort by</string>
     <string name="price">Price</string>
+    <string name="description">Description</string>
 </resources>

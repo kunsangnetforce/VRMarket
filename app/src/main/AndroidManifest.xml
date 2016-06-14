@@ -17,6 +17,7 @@
         </activity>
         <activity android:name=".dashboard.Dashboard" />
         <activity android:name=".search.SearchActivity" />
+        <activity android:name=".app_detail.AppDetailActivity"></activity>
     </application>
 
 </manifest>

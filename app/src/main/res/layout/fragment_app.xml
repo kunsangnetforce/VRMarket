@@ -19,18 +19,26 @@
             android:orientation="horizontal"
             android:weightSum="100">
 
-            <LinearLayout
-                android:id="@+id/linearLeft"
+            <com.balysv.materialripple.MaterialRippleLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/rippleleft"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="10">
 
-                <ImageView
-                    android:id="@+id/imageViewLeft"
+                <LinearLayout
+                    android:id="@+id/linearLeft"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_chevron_left" />
-            </LinearLayout>
+                    android:layout_height="wrap_content">
+
+
+                    <ImageView
+                        android:id="@+id/imageViewLeft"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_chevron_left" />
+
+                </LinearLayout>
+            </com.balysv.materialripple.MaterialRippleLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -46,19 +54,26 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/linearRight"
+            <com.balysv.materialripple.MaterialRippleLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/rippleright"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="10">
 
-                <ImageView
-                    android:id="@+id/imageViewRight"
+                <LinearLayout
+                    android:id="@+id/linearRight"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_chevron_right" />
+                    android:layout_height="wrap_content">
 
-            </LinearLayout>
+                    <ImageView
+                        android:id="@+id/imageViewRight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_chevron_right" />
+
+
+                </LinearLayout>
+            </com.balysv.materialripple.MaterialRippleLayout>
         </LinearLayout>
 
         <LinearLayout
