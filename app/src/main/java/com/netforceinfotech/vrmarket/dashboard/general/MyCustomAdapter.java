@@ -2,6 +2,9 @@ package com.netforceinfotech.vrmarket.dashboard.general;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Point;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +15,8 @@ import com.netforceinfotech.vrmarket.R;
 
 /**
  * Created by User1 on 04-01-2016.
- */ public class MyCustomAdapter extends ArrayAdapter<String> {
+ */
+public class MyCustomAdapter extends ArrayAdapter<String> {
 
     String[] items;
     int textViewResourceId;
@@ -37,14 +41,15 @@ import com.netforceinfotech.vrmarket.R;
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // TODO Auto-generated method stub
-        return getCustomView(position, convertView, parent);
+        View view = getCustomView(position, convertView, parent);
+        return view;
     }
 
     public View getCustomView(int position, View convertView, ViewGroup parent) {
         // TODO Auto-generated method stub
         //return super.getView(position, convertView, parent);
 
-        LayoutInflater inflater = ((Activity)context).getLayoutInflater();
+        LayoutInflater inflater = ((Activity) context).getLayoutInflater();
         View row = inflater.inflate(textViewResourceId, parent, false);
         TextView label = (TextView) row.findViewById(R.id.spinnerTarget);
         label.setText(items[position]);
