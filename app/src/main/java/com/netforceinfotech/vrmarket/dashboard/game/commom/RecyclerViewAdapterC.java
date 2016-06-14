@@ -2,6 +2,7 @@ package com.netforceinfotech.vrmarket.dashboard.game.commom;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.netforceinfotech.vrmarket.R;
+import com.netforceinfotech.vrmarket.app_detail.AppDetailActivity;
 
 import java.util.List;
 
@@ -37,6 +39,20 @@ public class RecyclerViewAdapterC extends RecyclerView.Adapter<RecyclerViewHolde
 
     @Override
     public void onBindViewHolder(RecyclerViewHolderC holder, final int position) {
+        holder.materialRippleLayoutDownload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMessage("Method to download");
+            }
+        });
+        holder.materialRippleLayoutInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, AppDetailActivity.class);
+                context.startActivity(intent);
+            }
+        });
+
     }
 
 

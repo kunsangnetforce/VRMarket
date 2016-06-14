@@ -13,6 +13,7 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.balysv.materialripple.MaterialRippleLayout;
 import com.netforceinfotech.vrmarket.R;
 import com.netforceinfotech.vrmarket.dashboard.app.commom.RecyclerViewAdapterC;
 import com.netforceinfotech.vrmarket.dashboard.app.commom.RowDataC;
@@ -31,6 +32,7 @@ import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
  * A simple {@link Fragment} subclass.
  */
 public class AppFragment extends Fragment implements View.OnClickListener {
+    MaterialRippleLayout rippleLeft, rippleRight;
     LinearLayout linearLayoutLeft, linearLayoutRight;
     private LinearLayoutManager layoutManagerFeatured;
     private Context context;
@@ -58,6 +60,8 @@ public class AppFragment extends Fragment implements View.OnClickListener {
 
         context = getActivity();
         view = inflater.inflate(R.layout.fragment_app, container, false);
+        rippleLeft = (MaterialRippleLayout) view.findViewById(R.id.rippleleft);
+        rippleRight = (MaterialRippleLayout) view.findViewById(R.id.rippleright);
         linearLayoutLeft = (LinearLayout) view.findViewById(R.id.linearLeft);
         linearLayoutRight = (LinearLayout) view.findViewById(R.id.linearRight);
         mSwipyRefreshLayout = (SwipyRefreshLayout) view.findViewById(R.id.swipyrefreshlayout);
@@ -68,8 +72,10 @@ public class AppFragment extends Fragment implements View.OnClickListener {
                 mSwipyRefreshLayout.setRefreshing(false);
             }
         });
-        linearLayoutRight.setOnClickListener(this);
         linearLayoutLeft.setOnClickListener(this);
+        linearLayoutRight.setOnClickListener(this);
+        rippleRight.setOnClickListener(this);
+        rippleLeft.setOnClickListener(this);
         setupRecycleFeatured();
         setupRecycleCommom();
         setupDropDown(view);
@@ -123,18 +129,25 @@ public class AppFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.rippleleft:
             case R.id.linearLeft:
                 try {
-                    recyclerView_Featured.scrollToPosition(RecyclerViewAdapterF.position - 1);
+                    showMessage("clicked");
+                    recyclerView_Featured.getLayoutManager().scrollToPosition(layoutManagerFeatured.findFirstVisibleItemPosition() - 1);
+
+                    // recyclerView_Featured.scrollToPosition(RecyclerViewAdapterF.position - 1);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
 
 
                 break;
+            case R.id.rippleright:
             case R.id.linearRight:
                 try {
-                    recyclerView_Featured.scrollToPosition(RecyclerViewAdapterF.position + 1);
+                    showMessage("clicked");
+                    recyclerView_Featured.getLayoutManager().scrollToPosition(layoutManagerFeatured.findLastVisibleItemPosition() + 1);
+                    //recyclerView_Featured.scrollToPosition(RecyclerViewAdapterF.position + 1);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }

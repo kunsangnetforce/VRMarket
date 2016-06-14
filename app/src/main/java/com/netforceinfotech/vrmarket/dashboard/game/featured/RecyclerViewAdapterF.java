@@ -3,6 +3,7 @@ package com.netforceinfotech.vrmarket.dashboard.game.featured;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.netforceinfotech.vrmarket.R;
+import com.netforceinfotech.vrmarket.app_detail.AppDetailActivity;
 
 import java.util.List;
 
@@ -40,7 +42,13 @@ public class RecyclerViewAdapterF extends RecyclerView.Adapter<RecyclerViewHolde
     public void onBindViewHolder(RecyclerViewHolderF holder, final int position) {
         this.position = position;
         holder.textView.setText("position" + position);
-        Log.i("position", position + "*********");
+        holder.materialRippleLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, AppDetailActivity.class);
+                context.startActivity(intent);
+            }
+        });
     }
 
 

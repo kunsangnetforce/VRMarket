@@ -7,78 +7,94 @@
     android:orientation="horizontal"
     android:weightSum="115">
 
-    <LinearLayout
+    <com.balysv.materialripple.MaterialRippleLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/rippleInfo"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="25"
-        android:gravity="center">
-
-        <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:background="@color/colorDivider"
-            android:src="@drawable/ic_search" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_weight="80"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/textViewAppName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="App Name"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textViewDeveloperName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:text="Developer name" />
+        android:layout_weight="105"
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:orientation="horizontal"
-            android:weightSum="150">
+            android:weightSum="105">
 
-            <TextView
-                android:id="@+id/textViewCategory"
+            <LinearLayout
+                android:id="@+id/linearIcon"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="50"
-                android:text="Category"
-                android:textSize="12sp"
-                android:textStyle="bold" />
+                android:layout_weight="25"
+                android:gravity="center">
 
-            <TextView
-                android:id="@+id/textViewPrice"
+                <ImageView
+                    android:id="@+id/imageViewIcon"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:background="@color/colorDivider"
+                    android:src="@drawable/ic_search" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearInfo"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="50"
-                android:text="Price: $2.99"
-                android:textSize="12sp"
-                android:textStyle="bold" />
+                android:layout_marginLeft="16dp"
+                android:layout_weight="80"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textViewRating"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="50"
-                android:text="Rating: 1.0"
-                android:textSize="12sp"
-                android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/textViewAppName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="App Name"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
+                <TextView
+                    android:id="@+id/textViewDeveloperName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="Developer name" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:orientation="horizontal"
+                    android:weightSum="150">
+
+                    <TextView
+                        android:id="@+id/textViewCategory"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:text="Category"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textViewPrice"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:text="Price: $2.99"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textViewRating"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:text="Rating: 1.0"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </com.balysv.materialripple.MaterialRippleLayout>
 
     <LinearLayout
         android:layout_width="0dp"
@@ -86,10 +102,17 @@
         android:layout_weight="10"
         android:gravity="center">
 
-        <ImageView
+        <com.balysv.materialripple.MaterialRippleLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/rippleDownload"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_download" />
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imageViewDownload"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_download" />
+        </com.balysv.materialripple.MaterialRippleLayout>
 
     </LinearLayout>
 </LinearLayout>

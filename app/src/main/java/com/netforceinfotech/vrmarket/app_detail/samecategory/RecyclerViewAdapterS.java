@@ -1,9 +1,10 @@
-package com.netforceinfotech.vrmarket.dashboard.app.commom;
+package com.netforceinfotech.vrmarket.app_detail.samecategory;
 
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,42 +20,41 @@ import java.util.List;
 /**
  * Created by Gowtham Chandrasekar on 31-07-2015.
  */
-public class RecyclerViewAdapterC extends RecyclerView.Adapter<RecyclerViewHolderC> {
+public class RecyclerViewAdapterS extends RecyclerView.Adapter<RecyclerViewHolderS> {
 
     public static int position = 0;
-    private List<RowDataC> itemList;
+    private static final String TAG = "tag_gcm";
+    private List<RowDataS> itemList;
     private Context context;
+    String teamName;
+    private String url;
+    private ProgressDialog pd;
 
-
-    public RecyclerViewAdapterC(Context context, List<RowDataC> itemList) {
+    public RecyclerViewAdapterS(Context context, List<RowDataS> itemList) {
         this.itemList = itemList;
         this.context = context;
 
     }
 
     @Override
-    public RecyclerViewHolderC onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_app_c, parent, false);
-        RecyclerViewHolderC viewHolder = new RecyclerViewHolderC(view);
+    public RecyclerViewHolderS onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_app_s, parent, false);
+        RecyclerViewHolderS viewHolder = new RecyclerViewHolderS(view);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(RecyclerViewHolderC holder, final int position) {
-        holder.materialRippleLayoutDownload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showMessage("Method to download");
-            }
-        });
-        holder.materialRippleLayoutInfo.setOnClickListener(new View.OnClickListener() {
+    public void onBindViewHolder(RecyclerViewHolderS holder, final int position) {
+        this.position = position;
+        holder.textView.setText("position" + position);
+        holder.materialRippleLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, AppDetailActivity.class);
                 context.startActivity(intent);
+                ((AppCompatActivity) context).overridePendingTransition(R.anim.enter, R.anim.exit);
             }
         });
-
     }
 
 
