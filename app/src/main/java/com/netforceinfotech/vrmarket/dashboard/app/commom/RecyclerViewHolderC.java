@@ -15,17 +15,23 @@ import com.netforceinfotech.vrmarket.R;
 public class RecyclerViewHolderC extends RecyclerView.ViewHolder {
 
     LinearLayout linearLayoutInfo,linearLayoutIcon;
-    ImageView imageViewDownload;
+    ImageView imageView;
+    TextView textViewAppName,textViewDeveloperName,textViewCategory,textViewPrice,textViewRating;
     MaterialRippleLayout materialRippleLayoutDownload,materialRippleLayoutInfo;
 
     public RecyclerViewHolderC(View itemView) {
         super(itemView);
         //implementing onClickListener
-        imageViewDownload= (ImageView) itemView.findViewById(R.id.imageViewDownload);
+        imageView= (ImageView) itemView.findViewById(R.id.imageView);
         linearLayoutIcon= (LinearLayout) itemView.findViewById(R.id.linearIcon);
         linearLayoutInfo= (LinearLayout) itemView.findViewById(R.id.linearInfo);
         materialRippleLayoutDownload= (MaterialRippleLayout) itemView.findViewById(R.id.rippleDownload);
         materialRippleLayoutInfo= (MaterialRippleLayout) itemView.findViewById(R.id.rippleInfo);
+        textViewAppName= (TextView) itemView.findViewById(R.id.textViewAppName);
+        textViewDeveloperName= (TextView) itemView.findViewById(R.id.textViewDeveloperName);
+        textViewCategory= (TextView) itemView.findViewById(R.id.textViewCategory);
+        textViewPrice= (TextView) itemView.findViewById(R.id.textViewPrice);
+        textViewRating= (TextView) itemView.findViewById(R.id.textViewRating);
 
     }
 

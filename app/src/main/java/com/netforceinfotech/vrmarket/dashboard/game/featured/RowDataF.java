@@ -7,8 +7,8 @@ public class RowDataF {
 
     /*
     * "palyerId": 1,
-      "playerName": "A",
-      "playerPosition": "playerPosition"
+      "app_name": "A",
+      "developer_name": "developer_name"
     * */
     public String playerId, playerName, playerPosition, playerImage;
 

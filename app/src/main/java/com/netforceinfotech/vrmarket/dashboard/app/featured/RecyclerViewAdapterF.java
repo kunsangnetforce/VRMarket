@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.netforceinfotech.vrmarket.R;
 import com.netforceinfotech.vrmarket.app_detail.AppDetailActivity;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -45,7 +46,12 @@ public class RecyclerViewAdapterF extends RecyclerView.Adapter<RecyclerViewHolde
     @Override
     public void onBindViewHolder(RecyclerViewHolderF holder, final int position) {
         this.position = position;
-        holder.textView.setText("position" + position);
+        holder.textView.setText(itemList.get(position).app_name);
+        Picasso.with(context)
+                .load("https://netforcesales.com/vrmarket/images/product_images/" + itemList.get(position).image_url)
+                .placeholder(R.color.light_gray)
+                .error(R.color.light_gray)
+                .into(holder.imageView);
         holder.materialRippleLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,7 +69,7 @@ public class RecyclerViewAdapterF extends RecyclerView.Adapter<RecyclerViewHolde
     @Override
     public int getItemCount() {
 
-        return 50;
+        return itemList.size();
         //  return itemList.size();
     }
 

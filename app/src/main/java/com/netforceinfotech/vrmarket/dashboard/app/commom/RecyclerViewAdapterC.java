@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.netforceinfotech.vrmarket.R;
 import com.netforceinfotech.vrmarket.app_detail.AppDetailActivity;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -54,6 +55,15 @@ public class RecyclerViewAdapterC extends RecyclerView.Adapter<RecyclerViewHolde
                 context.startActivity(intent);
             }
         });
+        Picasso.with(context)
+                .load("https://netforcesales.com/vrmarket/images/product_images/"+itemList.get(position).image_url)
+                .placeholder(R.color.light_gray)
+                .error(R.color.light_gray)
+                .into(holder.imageView);
+        holder.textViewAppName.setText(itemList.get(position).app_name);
+        holder.textViewDeveloperName.setText(itemList.get(position).developer_name);
+        holder.textViewPrice.setText("Rs " + itemList.get(position).price);
+        holder.textViewRating.setText("Rating:"+itemList.get(position).rating);
 
     }
 
@@ -65,7 +75,7 @@ public class RecyclerViewAdapterC extends RecyclerView.Adapter<RecyclerViewHolde
     @Override
     public int getItemCount() {
 
-        return 50;
+        return itemList.size();
         //  return itemList.size();
     }
 

@@ -7,17 +7,16 @@ public class RowDataF {
 
     /*
     * "palyerId": 1,
-      "playerName": "A",
-      "playerPosition": "playerPosition"
+      "app_name": "A",
+      "developer_name": "developer_name"
     * */
-    public String playerId, playerName, playerPosition, playerImage;
+    public String app_id, app_name, image_url;
 
 
-    public RowDataF(String playerId, String playerName, String playerPosition, String playerImage) {
-        this.playerId = playerId;
-        this.playerName = playerName;
-        this.playerPosition = playerPosition;
-        this.playerImage = playerImage;
+    public RowDataF(String app_id, String app_name, String image_url) {
+        this.app_id = app_id;
+        this.app_name = app_name;
+        this.image_url = image_url;
     }
 
 }

@@ -7,17 +7,20 @@ public class RowDataC {
 
     /*
     * "palyerId": 1,
-      "playerName": "A",
-      "playerPosition": "playerPosition"
+      "app_name": "A",
+      "developer_name": "developer_name"
     * */
-    public String playerId, playerName, playerPosition, playerImage;
+    public String app_id, app_name, developer_name, image_url, price, rating, app_url;
 
 
-    public RowDataC(String playerId, String playerName, String playerPosition, String playerImage) {
-        this.playerId = playerId;
-        this.playerName = playerName;
-        this.playerPosition = playerPosition;
-        this.playerImage = playerImage;
+    public RowDataC(String app_id, String app_name, String developer_name, String image_url, String price, String rating, String app_url) {
+        this.app_id = app_id;
+        this.app_name = app_name;
+        this.developer_name = developer_name;
+        this.image_url = image_url;
+        this.price = price;
+        this.rating = rating;
+        this.app_url = app_url;
     }
 
 }

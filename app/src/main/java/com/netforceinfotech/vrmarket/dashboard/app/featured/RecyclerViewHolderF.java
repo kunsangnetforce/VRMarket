@@ -15,6 +15,7 @@ public class RecyclerViewHolderF extends RecyclerView.ViewHolder {
 
     View view;
     TextView textView;
+    ImageView imageView;
     MaterialRippleLayout materialRippleLayout;
 
 
@@ -22,6 +23,7 @@ public class RecyclerViewHolderF extends RecyclerView.ViewHolder {
         super(itemView);
         //implementing onClickListener
         view = itemView;
+        imageView= (ImageView) view.findViewById(R.id.imageView);
         textView = (TextView) view.findViewById(R.id.textView);
         materialRippleLayout = (MaterialRippleLayout) view.findViewById(R.id.ripple);
 
