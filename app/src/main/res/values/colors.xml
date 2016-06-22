@@ -9,5 +9,6 @@
     <color name="colorSecondaryText">#727272</color>
     <color name="colorText">#FFFFFF</color>
     <color name="white">#ffffff</color>
+    <color name="light_gray">#eeeeee</color>
 
 </resources>

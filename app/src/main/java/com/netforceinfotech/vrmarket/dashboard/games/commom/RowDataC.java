@@ -1,4 +1,4 @@
-package com.netforceinfotech.vrmarket.dashboard.app.commom;
+package com.netforceinfotech.vrmarket.dashboard.games.commom;
 
 /**
  * Created by Gowtham Chandrasekar on 31-07-2015.

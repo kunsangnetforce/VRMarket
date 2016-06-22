@@ -1,4 +1,4 @@
-package com.netforceinfotech.vrmarket.app_detail.samecategory;
+package com.netforceinfotech.vrmarket.dashboard.games.featured;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -11,7 +11,7 @@ import com.netforceinfotech.vrmarket.R;
 /**
  * Created by Gowtham Chandrasekar on 31-07-2015.
  */
-public class RecyclerViewHolderS extends RecyclerView.ViewHolder {
+public class RecyclerViewHolderF extends RecyclerView.ViewHolder {
 
     View view;
     TextView textView;
@@ -19,7 +19,7 @@ public class RecyclerViewHolderS extends RecyclerView.ViewHolder {
     MaterialRippleLayout materialRippleLayout;
 
 
-    public RecyclerViewHolderS(View itemView) {
+    public RecyclerViewHolderF(View itemView) {
         super(itemView);
         //implementing onClickListener
         view = itemView;

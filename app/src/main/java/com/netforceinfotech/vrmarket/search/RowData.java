@@ -1,9 +1,9 @@
-package com.netforceinfotech.vrmarket.app_detail.samecategory;
+package com.netforceinfotech.vrmarket.search;
 
 /**
  * Created by Gowtham Chandrasekar on 31-07-2015.
  */
-public class RowDataS {
+public class RowData {
 
     /*
     * "palyerId": 1,
@@ -13,7 +13,7 @@ public class RowDataS {
     public String app_id, app_name, image_url;
 
 
-    public RowDataS(String app_id, String app_name, String image_url) {
+    public RowData(String app_id, String app_name, String image_url) {
         this.app_id = app_id;
         this.app_name = app_name;
         this.image_url = image_url;

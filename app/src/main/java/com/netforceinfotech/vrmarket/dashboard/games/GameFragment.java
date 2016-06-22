@@ -1,4 +1,4 @@
-package com.netforceinfotech.vrmarket.dashboard.app;
+package com.netforceinfotech.vrmarket.dashboard.games;
 
 
 import android.content.Context;
@@ -25,10 +25,10 @@ import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.async.http.AsyncHttpClientMiddleware;
 import com.koushikdutta.ion.Ion;
 import com.netforceinfotech.vrmarket.R;
-import com.netforceinfotech.vrmarket.dashboard.app.commom.RecyclerViewAdapterC;
-import com.netforceinfotech.vrmarket.dashboard.app.commom.RowDataC;
-import com.netforceinfotech.vrmarket.dashboard.app.featured.RecyclerViewAdapterF;
-import com.netforceinfotech.vrmarket.dashboard.app.featured.RowDataF;
+import com.netforceinfotech.vrmarket.dashboard.games.commom.RecyclerViewAdapterC;
+import com.netforceinfotech.vrmarket.dashboard.games.commom.RowDataC;
+import com.netforceinfotech.vrmarket.dashboard.games.featured.RecyclerViewAdapterF;
+import com.netforceinfotech.vrmarket.dashboard.games.featured.RowDataF;
 import com.netforceinfotech.vrmarket.dashboard.general.Category;
 import com.netforceinfotech.vrmarket.dashboard.general.GlobleVariable;
 import com.netforceinfotech.vrmarket.dashboard.general.MyCustomAdapter;
@@ -36,11 +36,6 @@ import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.ArrayList;
 
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
@@ -50,12 +45,11 @@ import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
-import okhttp3.Response;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AppFragment extends Fragment implements View.OnClickListener {
+public class GameFragment extends Fragment implements View.OnClickListener {
     MaterialRippleLayout rippleLeft, rippleRight;
     LinearLayout linearLayoutLeft, linearLayoutRight;
     private LinearLayoutManager layoutManagerFeatured;
@@ -86,7 +80,7 @@ public class AppFragment extends Fragment implements View.OnClickListener {
     boolean asc_sortby = true;
     private JsonArray staticapp;
 
-    public AppFragment() {
+    public GameFragment() {
         // Required empty public constructor
     }
 
@@ -104,7 +98,7 @@ public class AppFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
 
         context = getActivity();
-        type = "apps";
+        type = "games";
         imagePath = ((GlobleVariable) getActivity().getApplication()).getImagePath();
         view = inflater.inflate(R.layout.fragment_app, container, false);
         textViewNoCommom = (TextView) view.findViewById(R.id.textViewNoCommomApp);
@@ -192,7 +186,7 @@ public class AppFragment extends Fragment implements View.OnClickListener {
                             String status = result.get("status").getAsString();
                             if (status.equalsIgnoreCase("success")) {
                                 showMessage("Load complete...");
-                                AppFragment.this.page++;
+                                GameFragment.this.page++;
                                 JsonArray commom = result.getAsJsonArray("common");
                                 if (commom.size() < 1) {
                                     textViewNoCommom.setVisibility(View.VISIBLE);
@@ -247,7 +241,7 @@ public class AppFragment extends Fragment implements View.OnClickListener {
                             String status = result.get("status").getAsString();
                             if (status.equalsIgnoreCase("success")) {
                                 showMessage("Load complete...");
-                                AppFragment.this.page++;
+                                GameFragment.this.page++;
                                 if (page.equalsIgnoreCase("1")) {
                                     JsonArray features = result.getAsJsonArray("featured");
                                     if (features.size() < 1) {
@@ -258,6 +252,7 @@ public class AppFragment extends Fragment implements View.OnClickListener {
                                         recyclerView_Featured.setVisibility(View.VISIBLE);
                                     }
                                     staticapp = result.getAsJsonArray("static");
+                                    updateCommomAdapter(staticapp, "1");
                                     updateFeatureAdapter(features);
                                 }
                                 JsonArray commom = result.getAsJsonArray("common");
@@ -335,7 +330,7 @@ public class AppFragment extends Fragment implements View.OnClickListener {
         }
         for (int i = 0; i < commom.size(); i++) {
             jsonObject = commom.get(i).getAsJsonObject();
-            rowDatasCC.add(new RowDataC(jsonObject.get("id").getAsString(), jsonObject.get("product_name").getAsString(), jsonObject.get("developer_name").getAsString(), jsonObject.get("image").getAsString(), jsonObject.get("sales_price").getAsString(), "4.0", jsonObject.get("url").getAsString(), jsonObject.get("title").getAsString()));
+            rowDatasCC.add(new RowDataC(jsonObject.get("id").getAsString(), jsonObject.get("product_name").getAsString(), jsonObject.get("developer_name").getAsString(), jsonObject.get("image").getAsString(), jsonObject.get("sales_price").getAsString(), jsonObject.get("rating").getAsString(), jsonObject.get("url").getAsString(), jsonObject.get("title").getAsString()));
         }
         adapterCommom.notifyDataSetChanged();
     }

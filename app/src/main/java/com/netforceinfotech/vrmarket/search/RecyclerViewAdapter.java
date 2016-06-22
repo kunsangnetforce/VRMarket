@@ -1,4 +1,4 @@
-package com.netforceinfotech.vrmarket.dashboard.app.featured;
+package com.netforceinfotech.vrmarket.search;
 
 
 import android.app.ProgressDialog;
@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,18 +20,18 @@ import java.util.List;
 /**
  * Created by Gowtham Chandrasekar on 31-07-2015.
  */
-public class RecyclerViewAdapterF extends RecyclerView.Adapter<RecyclerViewHolderF> {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
 
     public static int position = 0;
     private static final String TAG = "tag_gcm";
-    private List<RowDataF> itemList;
+    private List<RowData> itemList;
     private Context context;
     String teamName;
     private String url;
     private ProgressDialog pd;
     String imagePath;
 
-    public RecyclerViewAdapterF(Context context, List<RowDataF> itemList,String imagePath) {
+    public RecyclerViewAdapter(Context context, List<RowData> itemList, String imagePath) {
         this.itemList = itemList;
         this.context = context;
         this.imagePath=imagePath;
@@ -40,14 +39,14 @@ public class RecyclerViewAdapterF extends RecyclerView.Adapter<RecyclerViewHolde
     }
 
     @Override
-    public RecyclerViewHolderF onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_app_f, parent, false);
-        RecyclerViewHolderF viewHolder = new RecyclerViewHolderF(view);
+        RecyclerViewHolder viewHolder = new RecyclerViewHolder(view);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(RecyclerViewHolderF holder, final int position) {
+    public void onBindViewHolder(RecyclerViewHolder holder, final int position) {
         this.position = position;
         String imagePathDetail=imagePath + itemList.get(position).image_url;
         holder.textView.setText(itemList.get(position).app_name);
@@ -60,6 +59,7 @@ public class RecyclerViewAdapterF extends RecyclerView.Adapter<RecyclerViewHolde
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, AppDetailActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 Bundle bundle = new Bundle();
                 bundle.putString("id", itemList.get(position).app_id);
                 intent.putExtras(bundle);

@@ -1,8 +1,9 @@
-package com.netforceinfotech.vrmarket.dashboard.game.commom;
+package com.netforceinfotech.vrmarket.dashboard.games.commom;
 
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 
 import com.netforceinfotech.vrmarket.R;
 import com.netforceinfotech.vrmarket.app_detail.AppDetailActivity;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -22,11 +24,13 @@ public class RecyclerViewAdapterC extends RecyclerView.Adapter<RecyclerViewHolde
     public static int position = 0;
     private List<RowDataC> itemList;
     private Context context;
+    private String imagePath;
 
 
-    public RecyclerViewAdapterC(Context context, List<RowDataC> itemList) {
+    public RecyclerViewAdapterC(Context context, List<RowDataC> itemList, String imagePath) {
         this.itemList = itemList;
         this.context = context;
+        this.imagePath = imagePath;
 
     }
 
@@ -49,9 +53,23 @@ public class RecyclerViewAdapterC extends RecyclerView.Adapter<RecyclerViewHolde
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, AppDetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("id", itemList.get(position).app_id);
+                intent.putExtras(bundle);
                 context.startActivity(intent);
             }
         });
+        String imagePathDetail = imagePath + itemList.get(position).image_url;
+        Picasso.with(context)
+                .load(imagePathDetail.replace(" ", "%20"))
+                .placeholder(R.color.light_gray)
+                .error(R.color.light_gray)
+                .into(holder.imageView);
+        holder.textViewAppName.setText(itemList.get(position).app_name);
+        holder.textViewDeveloperName.setText(itemList.get(position).developer_name);
+        holder.textViewPrice.setText("Price: $ " + itemList.get(position).price);
+        holder.textViewRating.setText("Rating:" + itemList.get(position).rating);
+        holder.textViewCategory.setText( itemList.get(position).category);
 
     }
 
@@ -63,7 +81,7 @@ public class RecyclerViewAdapterC extends RecyclerView.Adapter<RecyclerViewHolde
     @Override
     public int getItemCount() {
 
-        return 50;
+        return itemList.size();
         //  return itemList.size();
     }
 

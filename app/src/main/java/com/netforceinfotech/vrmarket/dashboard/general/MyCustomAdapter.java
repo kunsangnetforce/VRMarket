@@ -13,17 +13,19 @@ import android.widget.TextView;
 
 import com.netforceinfotech.vrmarket.R;
 
+import java.util.ArrayList;
+
 /**
  * Created by User1 on 04-01-2016.
  */
 public class MyCustomAdapter extends ArrayAdapter<String> {
 
-    String[] items;
+    ArrayList<String> items;
     int textViewResourceId;
     Context context;
 
     public MyCustomAdapter(Context context, int textViewResourceId,
-                           String[] items) {
+                           ArrayList<String> items) {
         super(context, textViewResourceId, items);
         this.items = items;
         this.textViewResourceId = textViewResourceId;
@@ -52,7 +54,7 @@ public class MyCustomAdapter extends ArrayAdapter<String> {
         LayoutInflater inflater = ((Activity) context).getLayoutInflater();
         View row = inflater.inflate(textViewResourceId, parent, false);
         TextView label = (TextView) row.findViewById(R.id.spinnerTarget);
-        label.setText(items[position]);
+        label.setText(items.get(position));
         return row;
     }
 }
