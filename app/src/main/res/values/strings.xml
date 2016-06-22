@@ -14,4 +14,9 @@
     <string name="price">Price</string>
     <string name="description">Description</string>
     <string name="url">http://netforcesales.com/vrmarket/api.php</string>
+    <string name="appkey">f3paovxgzfv5jj2pzus2wnfdvdaaeopc</string>
+    <string name="no_featured_app">No featured app</string>
+    <string name="no_app_found">No app found</string>
+    <string name="curl">http://netforcesales.com/vrmarket/capi.php</string>
+    <string name="surl">http://netforcesales.com/vrmarket/sapi.php</string>
 </resources>

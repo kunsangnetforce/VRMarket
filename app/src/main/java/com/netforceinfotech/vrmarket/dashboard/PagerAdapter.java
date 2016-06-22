@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.netforceinfotech.vrmarket.dashboard.app.AppFragment;
-import com.netforceinfotech.vrmarket.dashboard.game.GameFragment;
+import com.netforceinfotech.vrmarket.dashboard.games.GameFragment;
 
 public class PagerAdapter extends FragmentStatePagerAdapter {
     int mNumOfTabs;

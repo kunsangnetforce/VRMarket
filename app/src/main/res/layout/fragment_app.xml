@@ -43,12 +43,26 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="80">
+                android:layout_weight="80"
+                android:gravity="center">
+
+                <ProgressBar
+                    android:id="@+id/progressbar_feature"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/textViewNoFeaturedApp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/no_featured_app"
+                    android:visibility="gone" />
 
                 <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
                     android:id="@+id/recyclerFeatured"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
 
                 </android.support.v7.widget.RecyclerView>
 
@@ -142,19 +156,34 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="16dp"
+            android:gravity="center"
             android:orientation="vertical">
+
+            <ProgressBar
+                android:id="@+id/progressbar_commom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/textViewNoCommomApp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_app_found"
+                android:visibility="gone" />
 
             <com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
                 android:id="@+id/swipyrefreshlayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                app:srl_direction="bottom">
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerCommom"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
             </com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout>
         </LinearLayout>
 
