@@ -3,7 +3,9 @@ package com.netforceinfotech.vrmarket.dashboard.games.commom;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,7 +48,7 @@ public class RecyclerViewAdapterC extends RecyclerView.Adapter<RecyclerViewHolde
         holder.materialRippleLayoutDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showMessage("Method to download");
+                context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(itemList.get(position).app_url)));
             }
         });
         holder.materialRippleLayoutInfo.setOnClickListener(new View.OnClickListener() {
@@ -55,6 +57,7 @@ public class RecyclerViewAdapterC extends RecyclerView.Adapter<RecyclerViewHolde
                 Intent intent = new Intent(context, AppDetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("id", itemList.get(position).app_id);
+                bundle.putString("app_name",itemList.get(position).app_name);
                 intent.putExtras(bundle);
                 context.startActivity(intent);
             }
@@ -70,6 +73,12 @@ public class RecyclerViewAdapterC extends RecyclerView.Adapter<RecyclerViewHolde
         holder.textViewPrice.setText("Price: $ " + itemList.get(position).price);
         holder.textViewRating.setText("Rating:" + itemList.get(position).rating);
         holder.textViewCategory.setText( itemList.get(position).category);
+        if (itemList.get(position).staticApp) {
+            holder.linearLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
+        }
+        else {
+            holder.linearLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
+        }
 
     }
 

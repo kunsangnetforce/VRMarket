@@ -7,13 +7,10 @@ import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.Cancellable;
 import com.koushikdutta.async.future.FutureCallback;
@@ -23,6 +20,7 @@ import com.netforceinfotech.vrmarket.dashboard.Dashboard;
 import com.netforceinfotech.vrmarket.dashboard.general.Category;
 import com.netforceinfotech.vrmarket.dashboard.general.GlobleVariable;
 import com.netforceinfotech.vrmarket.dashboard.general.NoInternet;
+import com.nineoldandroids.animation.Animator;
 
 import java.util.ArrayList;
 
@@ -35,13 +33,61 @@ public class Splash extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        if (isNetworkAvailable()) {
-            getGeneralData();
-        } else {
-            Toast.makeText(Splash.this, "No internet connection...", Toast.LENGTH_SHORT).show();
-            finish();
-        }
+        getGeneralData();
+        startFadeIn();
 
+    }
+
+    private void startFadeIn() {
+        YoYo.with(Techniques.FadeIn)
+                .duration(3000).withListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                startFadeOut();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        })
+                .playOn(findViewById(R.id.imageView));
+    }
+
+    private void startFadeOut() {
+        YoYo.with(Techniques.FadeOut)
+                .duration(3000).withListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                startFadeIn();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        })
+                .playOn(findViewById(R.id.imageView));
     }
 
     private void getGeneralData() {
@@ -64,7 +110,7 @@ public class Splash extends AppCompatActivity {
                                 jsonObject = jsonArray.get(i).getAsJsonObject();
                                 arrayList.add(new Category(jsonObject.get("id").getAsString(), jsonObject.get("title").getAsString()));
                             }
-                            arrayList.add(new Category("","All Category"));
+                            arrayList.add(new Category("", "All Category"));
                             ((GlobleVariable) Splash.this.getApplication()).setCategory(arrayList);
                             Intent intent = new Intent(getApplicationContext(), Dashboard.class);
                             startActivity(intent);

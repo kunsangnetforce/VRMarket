@@ -61,6 +61,7 @@ public class RecyclerViewAdapterF extends RecyclerView.Adapter<RecyclerViewHolde
                 Intent intent = new Intent(context, AppDetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("id", itemList.get(position).app_id);
+                bundle.putString("app_name",itemList.get(position).app_name);
                 intent.putExtras(bundle);
                 context.startActivity(intent);
             }

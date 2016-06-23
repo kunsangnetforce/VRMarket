@@ -49,7 +49,8 @@ public class RecyclerViewAdapterF extends RecyclerView.Adapter<RecyclerViewHolde
     @Override
     public void onBindViewHolder(RecyclerViewHolderF holder, final int position) {
         this.position = position;
-        String imagePathDetail=imagePath + itemList.get(position).image_url;
+        Log.i("position",""+position);
+        final String imagePathDetail=imagePath + itemList.get(position).image_url;
         holder.textView.setText(itemList.get(position).app_name);
         Picasso.with(context)
                 .load(imagePathDetail.replace(" ", "%20"))
@@ -62,6 +63,7 @@ public class RecyclerViewAdapterF extends RecyclerView.Adapter<RecyclerViewHolde
                 Intent intent = new Intent(context, AppDetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("id", itemList.get(position).app_id);
+                bundle.putString("app_name",itemList.get(position).app_name);
                 intent.putExtras(bundle);
                 context.startActivity(intent);
             }

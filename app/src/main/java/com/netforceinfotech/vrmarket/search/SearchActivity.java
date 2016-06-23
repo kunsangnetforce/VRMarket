@@ -26,8 +26,6 @@ import com.netforceinfotech.vrmarket.dashboard.general.GlobleVariable;
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
-
 public class SearchActivity extends AppCompatActivity {
 
     public static final long FIND_SUGGESTION_SIMULATED_DELAY = 250;
@@ -59,9 +57,7 @@ public class SearchActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         adapter = new RecyclerViewAdapter(getApplicationContext(), rowDatasCC, imagePath);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setItemAnimator(new SlideInUpAnimator(new OvershootInterpolator(1f)));
-    }
+        recyclerView.setAdapter(adapter);}
 
     private void setupToolBar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -87,13 +83,17 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 //Do some magic
+                getData(getApplicationContext(), query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
                 //Do some magic
-                getData(getApplicationContext(), newText);
+                if (newText.length() > 2) {
+                    getData(getApplicationContext(), newText);
+                }
+
                 return false;
             }
         });

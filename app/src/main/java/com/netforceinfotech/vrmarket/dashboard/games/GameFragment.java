@@ -35,10 +35,7 @@ import com.netforceinfotech.vrmarket.dashboard.general.MyCustomAdapter;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
-
 import java.util.ArrayList;
-
-import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -89,6 +86,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser && !_areLecturesLoaded) {
             _areLecturesLoaded = true;
+            getData(getActivity(), type, page + "", selectedCategory, selectedPrice, selectedSortBy, asc_sortby);
         }
     }
 
@@ -117,7 +115,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                 getData(context, type, page + "", selectedCategory, selectedPrice, selectedSortBy, asc_sortby);
             }
         });
-        getData(context, type, page + "", selectedCategory, selectedPrice, selectedSortBy, asc_sortby);
+       // getData(context, type, page + "", selectedCategory, selectedPrice, selectedSortBy, asc_sortby);
         linearLayoutLeft.setOnClickListener(this);
         linearLayoutRight.setOnClickListener(this);
         rippleRight.setOnClickListener(this);
@@ -322,7 +320,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                 rowDatasCC.clear();
                 for (int i = 0; i < staticapp.size(); i++) {
                     jsonObject = staticapp.get(i).getAsJsonObject();
-                    rowDatasCC.add(new RowDataC(jsonObject.get("id").getAsString(), jsonObject.get("product_name").getAsString(), jsonObject.get("developer_name").getAsString(), jsonObject.get("image").getAsString(), jsonObject.get("sales_price").getAsString(), "4.0", jsonObject.get("url").getAsString(), jsonObject.get("title").getAsString()));
+                    rowDatasCC.add(new RowDataC(jsonObject.get("id").getAsString(), jsonObject.get("product_name").getAsString(), jsonObject.get("developer_name").getAsString(), jsonObject.get("image").getAsString(), jsonObject.get("sales_price").getAsString(), "4.0", jsonObject.get("url").getAsString(), jsonObject.get("title").getAsString(),true));
                 }
             } catch (Exception ex) {
 
@@ -330,7 +328,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         }
         for (int i = 0; i < commom.size(); i++) {
             jsonObject = commom.get(i).getAsJsonObject();
-            rowDatasCC.add(new RowDataC(jsonObject.get("id").getAsString(), jsonObject.get("product_name").getAsString(), jsonObject.get("developer_name").getAsString(), jsonObject.get("image").getAsString(), jsonObject.get("sales_price").getAsString(), jsonObject.get("rating").getAsString(), jsonObject.get("url").getAsString(), jsonObject.get("title").getAsString()));
+            rowDatasCC.add(new RowDataC(jsonObject.get("id").getAsString(), jsonObject.get("product_name").getAsString(), jsonObject.get("developer_name").getAsString(), jsonObject.get("image").getAsString(), jsonObject.get("sales_price").getAsString(), jsonObject.get("rating").getAsString(), jsonObject.get("url").getAsString(), jsonObject.get("title").getAsString(),false));
         }
         adapterCommom.notifyDataSetChanged();
     }
@@ -402,7 +400,6 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         recyclerView_Featured.setLayoutManager(layoutManagerFeatured);
         adapterFeatured = new RecyclerViewAdapterF(context, rowDataFs, imagePath);
         recyclerView_Featured.setAdapter(adapterFeatured);
-        recyclerView_Featured.setItemAnimator(new SlideInUpAnimator(new OvershootInterpolator(1f)));
     }
 
     private void setupRecycleCommom() {
@@ -412,9 +409,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         recyclerView_Commom.setLayoutManager(layoutManagerCommom);
         adapterCommom = new RecyclerViewAdapterC(context, rowDatasCC, imagePath);
         recyclerView_Commom.setAdapter(adapterCommom);
-        recyclerView_Commom.setItemAnimator(new SlideInUpAnimator(new OvershootInterpolator(1f)));
     }
-
 
     @Override
     public void onClick(View v) {

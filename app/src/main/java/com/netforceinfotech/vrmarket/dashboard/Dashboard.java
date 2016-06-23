@@ -15,12 +15,18 @@ import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.netforceinfotech.vrmarket.R;
+import com.netforceinfotech.vrmarket.dashboard.general.AboutFragment;
+import com.netforceinfotech.vrmarket.dashboard.general.ContactFragment;
+import com.netforceinfotech.vrmarket.dashboard.general.PrivacyPolicyFragment;
 import com.netforceinfotech.vrmarket.search.SearchActivity;
 
 public class Dashboard extends AppCompatActivity {
 
     private Toolbar toolbar;
     private DashboardFragment dashboardFragment;
+    AboutFragment aboutFragment;
+    ContactFragment contactFragment;
+    PrivacyPolicyFragment privacyPolicyFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +40,6 @@ public class Dashboard extends AppCompatActivity {
     }
 
 
-
     private void setupToolBar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -44,9 +49,9 @@ public class Dashboard extends AppCompatActivity {
 
     private void setupNavigationDrawer() {
         PrimaryDrawerItem home = new PrimaryDrawerItem().withName(R.string.home);
-        PrimaryDrawerItem about = new PrimaryDrawerItem().withName(R.string.about);
+        final PrimaryDrawerItem about = new PrimaryDrawerItem().withName(R.string.about);
         PrimaryDrawerItem contact = new PrimaryDrawerItem().withName(R.string.contact);
-        PrimaryDrawerItem privacy = new PrimaryDrawerItem().withName(R.string.privacy);
+        final PrimaryDrawerItem privacy = new PrimaryDrawerItem().withName(R.string.privacy);
         Drawer result = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
@@ -57,6 +62,23 @@ public class Dashboard extends AppCompatActivity {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         // do something with the clicked item :D
+                        switch (position) {
+                            case 0:
+                                setupDashboard();
+                                break;
+                            case 1:
+                                setupAbout();
+                                break;
+                            case 2:
+                                setupContact();
+                                break;
+                            case 3:
+                                setupPrivacyPolicy();
+                                break;
+                            default:
+                                setupDashboard();
+
+                        }
                         return false;
                     }
                 })
@@ -90,10 +112,26 @@ public class Dashboard extends AppCompatActivity {
     }
 
     private void setupDashboard() {
-        if (dashboardFragment == null) {
-            dashboardFragment = new DashboardFragment();
-        }
+        dashboardFragment = new DashboardFragment();
         String tagName = dashboardFragment.getClass().getName();
         replaceFragment(dashboardFragment, tagName);
+    }
+
+    private void setupAbout() {
+        aboutFragment = new AboutFragment();
+        String tagName = aboutFragment.getClass().getName();
+        replaceFragment(aboutFragment, tagName);
+    }
+
+    private void setupContact() {
+        contactFragment = new ContactFragment();
+        String tagName = contactFragment.getClass().getName();
+        replaceFragment(contactFragment, tagName);
+    }
+
+    private void setupPrivacyPolicy() {
+        privacyPolicyFragment = new PrivacyPolicyFragment();
+        String tagName = privacyPolicyFragment.getClass().getName();
+        replaceFragment(privacyPolicyFragment, tagName);
     }
 }

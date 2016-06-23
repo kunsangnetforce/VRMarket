@@ -10,10 +10,11 @@ public class RowDataC {
       "app_name": "A",
       "developer_name": "developer_name"
     * */
+    public boolean staticApp;
     public String app_id, app_name, developer_name, image_url, price, rating, app_url,category;
 
 
-    public RowDataC(String app_id, String app_name, String developer_name, String image_url, String price, String rating, String app_url,String category) {
+    public RowDataC(String app_id, String app_name, String developer_name, String image_url, String price, String rating, String app_url,String category,boolean staticApp) {
         this.app_id = app_id;
         this.app_name = app_name;
         this.developer_name = developer_name;
@@ -22,6 +23,7 @@ public class RowDataC {
         this.rating = rating;
         this.app_url = app_url;
         this.category=category;
+        this.staticApp=staticApp;
     }
 
 }

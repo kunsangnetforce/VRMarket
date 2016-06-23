@@ -14,7 +14,7 @@ import com.netforceinfotech.vrmarket.R;
  */
 public class RecyclerViewHolderC extends RecyclerView.ViewHolder {
 
-    LinearLayout linearLayoutInfo,linearLayoutIcon;
+    LinearLayout linearLayoutInfo,linearLayoutIcon,linearLayout;
     ImageView imageView;
     TextView textViewAppName,textViewDeveloperName,textViewCategory,textViewPrice,textViewRating;
     MaterialRippleLayout materialRippleLayoutDownload,materialRippleLayoutInfo;
@@ -23,6 +23,7 @@ public class RecyclerViewHolderC extends RecyclerView.ViewHolder {
         super(itemView);
         //implementing onClickListener
         imageView= (ImageView) itemView.findViewById(R.id.imageView);
+        linearLayout= (LinearLayout) itemView.findViewById(R.id.linearLayout);
         linearLayoutIcon= (LinearLayout) itemView.findViewById(R.id.linearIcon);
         linearLayoutInfo= (LinearLayout) itemView.findViewById(R.id.linearInfo);
         materialRippleLayoutDownload= (MaterialRippleLayout) itemView.findViewById(R.id.rippleDownload);

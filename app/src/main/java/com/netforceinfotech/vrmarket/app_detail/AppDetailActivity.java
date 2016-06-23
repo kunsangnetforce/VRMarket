@@ -41,8 +41,6 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
-
 public class AppDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
     private RecyclerView recyclerView_Same;
@@ -67,6 +65,7 @@ public class AppDetailActivity extends AppCompatActivity implements View.OnClick
         imagePath = ((GlobleVariable) getApplication()).getImagePath();
         Bundle bundle = getIntent().getExtras();
         String id = bundle.getString("id");
+        String app_name = bundle.getString("app_name");
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
         linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
         linearLayout.setVisibility(View.INVISIBLE);
@@ -78,7 +77,7 @@ public class AppDetailActivity extends AppCompatActivity implements View.OnClick
             finish();
         }
         getAppDetail(id);
-        setupToolBar();
+        setupToolBar(app_name);
         imageView = (ImageView) findViewById(R.id.imageView);
         imageViewDownload = (ImageView) findViewById(R.id.imageViewDownload);
         imageViewDownload.setOnClickListener(this);
@@ -162,7 +161,7 @@ public class AppDetailActivity extends AppCompatActivity implements View.OnClick
         String price = data.get("sales_price").getAsString();
         String rating = data.get("rating").getAsString();
         url = data.get("url").getAsString();
-        String description = data.get("full_description").getAsString();
+        String description = data.get("short_description").getAsString();
         JsonArray images = result.get("images").getAsJsonArray();
         Log.i("result images", "" + images.size());
         JsonArray similar = result.get("similar").getAsJsonArray();
@@ -254,15 +253,14 @@ public class AppDetailActivity extends AppCompatActivity implements View.OnClick
         recyclerView_Same.setLayoutManager(layoutManagerSame);
         adapterSame = new RecyclerViewAdapterS(context, rowDataS, imagePath);
         recyclerView_Same.setAdapter(adapterSame);
-        recyclerView_Same.setItemAnimator(new SlideInUpAnimator(new OvershootInterpolator(1f)));
     }
 
-    private void setupToolBar() {
+    private void setupToolBar(String app_name) {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("App title");
+        getSupportActionBar().setTitle(app_name);
         ;
 
     }
@@ -271,9 +269,7 @@ public class AppDetailActivity extends AppCompatActivity implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.imageViewDownload:
-
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.yaksolution.gcm")));
-
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
                 break;
         }
     }
