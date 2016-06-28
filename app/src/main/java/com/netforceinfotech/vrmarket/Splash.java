@@ -7,9 +7,6 @@ import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-
-import com.daimajia.androidanimations.library.Techniques;
-import com.daimajia.androidanimations.library.YoYo;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.Cancellable;
@@ -34,61 +31,9 @@ public class Splash extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         getGeneralData();
-        startFadeIn();
 
     }
 
-    private void startFadeIn() {
-        YoYo.with(Techniques.FadeIn)
-                .duration(3000).withListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                startFadeOut();
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-
-            }
-        })
-                .playOn(findViewById(R.id.imageView));
-    }
-
-    private void startFadeOut() {
-        YoYo.with(Techniques.FadeOut)
-                .duration(3000).withListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                startFadeIn();
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-
-            }
-        })
-                .playOn(findViewById(R.id.imageView));
-    }
 
     private void getGeneralData() {
         setHeader();

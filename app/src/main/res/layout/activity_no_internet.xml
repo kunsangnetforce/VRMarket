@@ -3,13 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
     tools:context=".dashboard.general.NoInternet">
     <ImageView
         android:padding="36dp"
-        android:scaleType="centerCrop"
+        android:scaleType="fitXY"
         android:src="@drawable/no_internet"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="300dp"
+        android:layout_height="350dp"
 
         />
+    <TextView
+        android:textStyle="bold|italic"
+        android:textSize="24sp"
+        android:text="No internet ..."
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </LinearLayout>

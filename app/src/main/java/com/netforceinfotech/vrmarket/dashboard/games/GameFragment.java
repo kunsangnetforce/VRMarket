@@ -414,21 +414,19 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.rippleleft:
             case R.id.linearLeft:
                 try {
-                    recyclerView_Featured.getLayoutManager().scrollToPosition(layoutManagerFeatured.findFirstVisibleItemPosition() - 1);
+                    recyclerView_Featured.smoothScrollToPosition(layoutManagerFeatured.findFirstVisibleItemPosition() - 1);
+
 
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
-
-
                 break;
-            case R.id.rippleright:
             case R.id.linearRight:
                 try {
-                    recyclerView_Featured.getLayoutManager().scrollToPosition(layoutManagerFeatured.findLastVisibleItemPosition() + 1);
+                    recyclerView_Featured.smoothScrollToPosition(layoutManagerFeatured.findLastVisibleItemPosition() +1);
+
                     //recyclerView_Featured.scrollToPosition(RecyclerViewAdapter.position + 1);
                 } catch (Exception ex) {
                     ex.printStackTrace();
