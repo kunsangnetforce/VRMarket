@@ -13,7 +13,7 @@
         android:id="@+id/imageView"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:background="@drawable/logobig" />
+        android:background="@drawable/logo" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -22,5 +22,10 @@
         android:text="Loading data..."
         android:textSize="18sp"
         android:textStyle="italic" />
+
+    <ProgressBar
+        android:padding="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

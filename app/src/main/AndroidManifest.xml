@@ -36,7 +36,7 @@
             />
         <activity
             android:name=".dashboard.general.NoInternet"
-            android:configChanges="orientation|screenSize"></activity>
+            android:configChanges="orientation|screenSize"/>
     </application>
 
 </manifest>

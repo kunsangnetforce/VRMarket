@@ -422,8 +422,8 @@ public class AppFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.linearLeft:
                 try {
-                    int pos = layoutManagerFeatured.findFirstVisibleItemPosition() - 1;
-                    layoutManagerFeatured.scrollToPositionWithOffset(pos,30);
+                    recyclerView_Featured.smoothScrollToPosition(layoutManagerFeatured.findFirstVisibleItemPosition() - 1);
+
 
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -431,8 +431,8 @@ public class AppFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.linearRight:
                 try {
-                    int pos = layoutManagerFeatured.findLastVisibleItemPosition() + 1;
-                    layoutManagerFeatured.scrollToPosition(pos);
+                    recyclerView_Featured.smoothScrollToPosition(layoutManagerFeatured.findLastVisibleItemPosition() +1);
+
                     //recyclerView_Featured.scrollToPosition(RecyclerViewAdapter.position + 1);
                 } catch (Exception ex) {
                     ex.printStackTrace();

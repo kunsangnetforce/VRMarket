@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.animation.OvershootInterpolator;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.gson.JsonArray;
@@ -57,7 +58,8 @@ public class SearchActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         adapter = new RecyclerViewAdapter(getApplicationContext(), rowDatasCC, imagePath);
-        recyclerView.setAdapter(adapter);}
+        recyclerView.setAdapter(adapter);
+    }
 
     private void setupToolBar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -147,7 +149,6 @@ public class SearchActivity extends AppCompatActivity {
 
 
                             } else {
-
                             }
                         }
 
