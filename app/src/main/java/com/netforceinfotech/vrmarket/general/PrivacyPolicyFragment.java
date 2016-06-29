@@ -1,4 +1,4 @@
-package com.netforceinfotech.vrmarket.dashboard.general;
+package com.netforceinfotech.vrmarket.general;
 
 
 import android.content.Context;
@@ -21,12 +21,11 @@ import com.netforceinfotech.vrmarket.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ContactFragment extends Fragment {
+public class PrivacyPolicyFragment extends Fragment {
 
     Context context;
-    TextView textViewEmail, textViewPhone, textViewAddress, textViewWebsite, textViewFax;
-
-    public ContactFragment() {
+    TextView textView;
+    public PrivacyPolicyFragment() {
         // Required empty public constructor
     }
 
@@ -35,23 +34,18 @@ public class ContactFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_about, container, false);
-        textViewAddress = (TextView) view.findViewById(R.id.textViewAddress);
-        context = getActivity();
-        textViewEmail = (TextView) view.findViewById(R.id.textViewEmail);
-        textViewPhone = (TextView) view.findViewById(R.id.textViewPhone);
-        textViewWebsite = (TextView) view.findViewById(R.id.textViewWebsite);
-        textViewFax = (TextView) view.findViewById(R.id.textViewFax);
-        getContact();
+        View view= inflater.inflate(R.layout.fragment_privacy_policy, container, false);
+        context=getActivity();
+        textView= (TextView) view.findViewById(R.id.textView);
+        getPrivacyPolicy();
         return view;
     }
-
-    private void getContact() {
+    private void getPrivacyPolicy() {
         setHeader();
         String url = getResources().getString(R.string.purl);
         Ion.with(context)
-                .load(url + "?id=2")
-                .setBodyParameter("id", "2")
+                .load(url + "?id=3")
+                .setBodyParameter("id", "3")
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
@@ -61,16 +55,8 @@ public class ContactFragment extends Fragment {
                             String status = result.get("status").getAsString();
                             if (status.equalsIgnoreCase("success")) {
                                 JsonObject data = result.get("data").getAsJsonObject();
-                                String address = data.get("address").getAsString();
-                                String fax = data.get("fax").getAsString();
-                                String url = data.get("url").getAsString();
-                                String phone = data.get("phone").getAsString();
-                                String email = data.get("email").getAsString();
-                                textViewWebsite.setText(url);
-                                textViewPhone.setText(phone);
-                                textViewEmail.setText(email);
-                                textViewFax.setText(fax);
-                                textViewAddress.setText(address);
+                                String about = data.get("page_desc").getAsString();
+                                textView.setText(about);
                             } else {
                                 Toast.makeText(context, "Something went wrong... try again", Toast.LENGTH_SHORT).show();
                             }

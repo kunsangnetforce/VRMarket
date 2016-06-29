@@ -1,4 +1,4 @@
-package com.netforceinfotech.vrmarket.dashboard.general;
+package com.netforceinfotech.vrmarket.general;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;

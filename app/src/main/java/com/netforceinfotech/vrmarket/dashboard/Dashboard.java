@@ -15,9 +15,9 @@ import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.netforceinfotech.vrmarket.R;
-import com.netforceinfotech.vrmarket.dashboard.general.AboutFragment;
-import com.netforceinfotech.vrmarket.dashboard.general.ContactFragment;
-import com.netforceinfotech.vrmarket.dashboard.general.PrivacyPolicyFragment;
+import com.netforceinfotech.vrmarket.general.AboutFragment;
+import com.netforceinfotech.vrmarket.general.ContactFragment;
+import com.netforceinfotech.vrmarket.general.PrivacyPolicyFragment;
 import com.netforceinfotech.vrmarket.search.SearchActivity;
 
 public class Dashboard extends AppCompatActivity {

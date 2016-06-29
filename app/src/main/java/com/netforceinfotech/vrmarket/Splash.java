@@ -14,10 +14,9 @@ import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.async.http.AsyncHttpClientMiddleware;
 import com.koushikdutta.ion.Ion;
 import com.netforceinfotech.vrmarket.dashboard.Dashboard;
-import com.netforceinfotech.vrmarket.dashboard.general.Category;
-import com.netforceinfotech.vrmarket.dashboard.general.GlobleVariable;
-import com.netforceinfotech.vrmarket.dashboard.general.NoInternet;
-import com.nineoldandroids.animation.Animator;
+import com.netforceinfotech.vrmarket.general.Category;
+import com.netforceinfotech.vrmarket.general.GlobleVariable;
+import com.netforceinfotech.vrmarket.general.NoInternet;
 
 import java.util.ArrayList;
 

@@ -5,189 +5,190 @@
     android:layout_height="match_parent"
     tools:context=".dashboard.app.AppFragment">
 
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:weightSum="100">
-
-            <com.balysv.materialripple.MaterialRippleLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/rippleleft"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="10">
-
-                <LinearLayout
-                    android:id="@+id/linearLeft"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-
-                    <ImageView
-                        android:id="@+id/imageViewLeft"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_chevron_left" />
-
-                </LinearLayout>
-            </com.balysv.materialripple.MaterialRippleLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="80"
-                android:gravity="center">
-
-                <ProgressBar
-                    android:id="@+id/progressbar_feature"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:id="@+id/textViewNoFeaturedApp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/no_featured_app"
-                    android:visibility="gone" />
-
-                <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:id="@+id/recyclerFeatured"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone">
-
-                </android.support.v7.widget.RecyclerView>
-
-            </LinearLayout>
-
-            <com.balysv.materialripple.MaterialRippleLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/rippleright"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="10">
-
-                <LinearLayout
-                    android:id="@+id/linearRight"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/imageViewRight"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_chevron_right" />
-
-
-                </LinearLayout>
-            </com.balysv.materialripple.MaterialRippleLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@color/white"
-            android:orientation="horizontal"
-            android:weightSum="150">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="50"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-                    android:id="@+id/category"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:dropDownWidth="150dp"
-                    android:gravity="right"
-                    android:hint="@string/category"
-                    android:textSize="12sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="50"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-                    android:id="@+id/latest"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:dropDownWidth="150dp"
-                    android:gravity="center"
-                    android:hint="@string/sort"
-                    android:textSize="12sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="50"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-                    android:id="@+id/free"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:dropDownWidth="150dp"
-                    android:gravity="center"
-                    android:hint="@string/price"
-                    android:textSize="12sp" />
-
-            </LinearLayout>
-        </LinearLayout>
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="16dp"
-            android:gravity="center"
             android:orientation="vertical">
 
-            <ProgressBar
-                android:id="@+id/progressbar_commom"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/textViewNoCommomApp"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/no_app_found"
-                android:visibility="gone" />
+                android:layout_marginTop="6dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="100">
 
-            <com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
-                android:id="@+id/swipyrefreshlayout"
+                <com.balysv.materialripple.MaterialRippleLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/rippleleft"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="10">
+
+                    <LinearLayout
+                        android:id="@+id/linearLeft"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+
+                        <ImageView
+                            android:id="@+id/imageViewLeft"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_chevron_left" />
+
+                    </LinearLayout>
+                </com.balysv.materialripple.MaterialRippleLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="80"
+                    android:gravity="center">
+
+                    <ProgressBar
+                        android:id="@+id/progressbar_feature"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/textViewNoFeaturedApp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/no_featured_app"
+                        android:visibility="gone" />
+
+                    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/recyclerFeatured"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone">
+                    </android.support.v7.widget.RecyclerView>
+
+                </LinearLayout>
+
+                <com.balysv.materialripple.MaterialRippleLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/rippleright"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="10">
+
+                    <LinearLayout
+                        android:id="@+id/linearRight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/imageViewRight"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_chevron_right" />
+
+
+                    </LinearLayout>
+                </com.balysv.materialripple.MaterialRippleLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:weightSum="150">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                        android:id="@+id/category"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:dropDownWidth="150dp"
+                        android:gravity="right"
+                        android:hint="@string/category"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                        android:id="@+id/latest"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:dropDownWidth="150dp"
+                        android:gravity="center"
+                        android:hint="@string/sort"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                        android:id="@+id/free"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:dropDownWidth="150dp"
+                        android:gravity="center"
+                        android:hint="@string/price"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:srl_direction="bottom">
+                android:gravity="center"
+                android:orientation="vertical">
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recyclerCommom"
-                    android:layout_width="match_parent"
+                <ProgressBar
+                    android:id="@+id/progressbar_commom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/textViewNoCommomApp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@string/no_app_found"
                     android:visibility="gone" />
-            </com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout>
+
+                <com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
+                    android:id="@+id/swipyrefreshlayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:srl_direction="bottom">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerCommom"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone" />
+                </com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout>
+            </LinearLayout>
+
         </LinearLayout>
-
-    </LinearLayout>
-
+    </ScrollView>
 
 </FrameLayout>

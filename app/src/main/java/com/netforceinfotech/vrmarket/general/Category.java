@@ -1,4 +1,4 @@
-package com.netforceinfotech.vrmarket.dashboard.general;
+package com.netforceinfotech.vrmarket.general;
 
 /**
  * Created by Netforce on 6/22/2016.

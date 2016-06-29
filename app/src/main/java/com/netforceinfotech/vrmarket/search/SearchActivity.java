@@ -1,7 +1,6 @@
 package com.netforceinfotech.vrmarket.search;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,8 +9,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.animation.OvershootInterpolator;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.gson.JsonArray;
@@ -22,7 +19,7 @@ import com.koushikdutta.async.http.AsyncHttpClientMiddleware;
 import com.koushikdutta.ion.Ion;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.netforceinfotech.vrmarket.R;
-import com.netforceinfotech.vrmarket.dashboard.general.GlobleVariable;
+import com.netforceinfotech.vrmarket.general.GlobleVariable;
 
 import java.util.ArrayList;
 import java.util.List;

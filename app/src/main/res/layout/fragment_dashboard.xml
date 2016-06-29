@@ -22,7 +22,7 @@
             app:tabSelectedTextColor="@color/md_black_1000"
             app:tabTextColor="#000000" />
 
-        <com.netforceinfotech.vrmarket.dashboard.general.CustomViewPager
+        <com.netforceinfotech.vrmarket.general.CustomViewPager
             android:id="@+id/pager"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"

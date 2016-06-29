@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context=".dashboard.general.AboutFragment">
+    tools:context=".general.AboutFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <ScrollView

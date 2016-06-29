@@ -6,18 +6,13 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.mikepenz.materialdrawer.Drawer;
-import com.mikepenz.materialdrawer.DrawerBuilder;
-import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.netforceinfotech.vrmarket.R;
-import com.netforceinfotech.vrmarket.dashboard.general.CustomViewPager;
+import com.netforceinfotech.vrmarket.general.CustomViewPager;
 
 /**
  * A simple {@link Fragment} subclass.

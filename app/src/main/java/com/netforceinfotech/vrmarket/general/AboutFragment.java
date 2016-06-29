@@ -1,4 +1,4 @@
-package com.netforceinfotech.vrmarket.dashboard.general;
+package com.netforceinfotech.vrmarket.general;
 
 
 import android.content.Context;
@@ -21,11 +21,12 @@ import com.netforceinfotech.vrmarket.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PrivacyPolicyFragment extends Fragment {
+public class AboutFragment extends Fragment {
 
     Context context;
     TextView textView;
-    public PrivacyPolicyFragment() {
+
+    public AboutFragment() {
         // Required empty public constructor
     }
 
@@ -34,18 +35,19 @@ public class PrivacyPolicyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_privacy_policy, container, false);
-        context=getActivity();
-        textView= (TextView) view.findViewById(R.id.textView);
-        getPrivacyPolicy();
+        View view = inflater.inflate(R.layout.fragment_about_us, container, false);
+        textView = (TextView) view.findViewById(R.id.textView);
+        context = getActivity();
+        getAbout();
         return view;
     }
-    private void getPrivacyPolicy() {
+
+    private void getAbout() {
         setHeader();
         String url = getResources().getString(R.string.purl);
         Ion.with(context)
-                .load(url + "?id=3")
-                .setBodyParameter("id", "3")
+                .load(url + "?id=1")
+                .setBodyParameter("id", "1")
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override

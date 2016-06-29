@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.OvershootInterpolator;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -29,18 +28,13 @@ import com.netforceinfotech.vrmarket.dashboard.app.commom.RecyclerViewAdapterC;
 import com.netforceinfotech.vrmarket.dashboard.app.commom.RowDataC;
 import com.netforceinfotech.vrmarket.dashboard.app.featured.RecyclerViewAdapterF;
 import com.netforceinfotech.vrmarket.dashboard.app.featured.RowDataF;
-import com.netforceinfotech.vrmarket.dashboard.general.Category;
-import com.netforceinfotech.vrmarket.dashboard.general.GlobleVariable;
-import com.netforceinfotech.vrmarket.dashboard.general.MyCustomAdapter;
+import com.netforceinfotech.vrmarket.general.Category;
+import com.netforceinfotech.vrmarket.general.GlobleVariable;
+import com.netforceinfotech.vrmarket.general.MyCustomAdapter;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -48,7 +42,6 @@ import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
-import okhttp3.Response;
 
 /**
  * A simple {@link Fragment} subclass.

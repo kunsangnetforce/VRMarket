@@ -1,4 +1,4 @@
-package com.netforceinfotech.vrmarket.dashboard.general;
+package com.netforceinfotech.vrmarket.general;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

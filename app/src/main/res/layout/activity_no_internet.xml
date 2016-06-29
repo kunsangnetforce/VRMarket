@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".dashboard.general.NoInternet">
+    tools:context=".general.NoInternet">
     <ImageView
         android:padding="36dp"
         android:scaleType="fitXY"
