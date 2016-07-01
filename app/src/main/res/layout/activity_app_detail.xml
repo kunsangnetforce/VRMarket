@@ -104,6 +104,26 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="6dp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:weightSum="100">
+
+                                <TextView
+                                    android:id="@+id/textViewDeveloperName"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="50"
+                                    android:text="Developer name"
+                                    android:textStyle="bold" />
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:gravity="center_vertical"
                                 android:orientation="horizontal"
                                 android:weightSum="100">
 
@@ -117,39 +137,31 @@
                                     android:textStyle="bold" />
 
                                 <TextView
-                                    android:id="@+id/textViewPrice"
+                                    android:id="@+id/textViewRating"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="50"
-                                    android:text="Price: $2.99"
+                                    android:text="Rating: 1.0"
                                     android:textSize="12sp"
                                     android:textStyle="bold" />
-
                             </LinearLayout>
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:gravity="center_vertical"
                                 android:orientation="horizontal"
                                 android:weightSum="100">
 
                                 <TextView
-                                    android:id="@+id/textViewDeveloperName"
+                                    android:id="@+id/textViewPrice"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="6dp"
                                     android:layout_weight="50"
-                                    android:text="Developer name" />
+                                    android:text="Price: $2.99"
+                                    android:textSize="12sp" />
 
-                                <TextView
-                                    android:id="@+id/textViewRating"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="6dp"
-                                    android:layout_weight="50"
-                                    android:text="Rating: 1.0"
-                                    android:textSize="12sp"
-                                    android:textStyle="bold" />
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
@@ -190,6 +202,8 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:ellipsize="end"
+                    android:maxLines="3"
                     android:id="@+id/textViewDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

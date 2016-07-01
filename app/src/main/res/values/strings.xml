@@ -20,4 +20,6 @@
     <string name="curl">http://netforcesales.com/vrmarket/capi.php</string>
     <string name="surl">http://netforcesales.com/vrmarket/sapi.php</string>
     <string name="purl">http://netforcesales.com/vrmarket/page.php</string>
+    <string name="gamefragment">GameFragment</string>
+    <string name="ok">OK</string>
 </resources>
