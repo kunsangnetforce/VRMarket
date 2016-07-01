@@ -4,8 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.netforceinfotech.vrmarket.dashboard.app.AppFragment;
-import com.netforceinfotech.vrmarket.dashboard.games.GameFragment;
+import com.netforceinfotech.vrmarket.dashboard.app.AppFragmentStickyFilter;
+import com.netforceinfotech.vrmarket.dashboard.games.GameFragmentStickyFilter;
 
 public class PagerAdapter extends FragmentStatePagerAdapter {
     int mNumOfTabs;
@@ -20,10 +20,10 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
 
         switch (position) {
             case 0:
-                AppFragment appFragment = new AppFragment();
+                AppFragmentStickyFilter appFragment = new AppFragmentStickyFilter();
                 return appFragment;
             case 1:
-                GameFragment gameFragment = new GameFragment();
+                GameFragmentStickyFilter gameFragment = new GameFragmentStickyFilter();
                 return gameFragment;
 
             default:

@@ -1,9 +1,12 @@
-package com.netforceinfotech.vrmarket.dashboard.app;
+package com.netforceinfotech.vrmarket.dashboard.app.commom;
 
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -24,8 +27,7 @@ import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.async.http.AsyncHttpClientMiddleware;
 import com.koushikdutta.ion.Ion;
 import com.netforceinfotech.vrmarket.R;
-import com.netforceinfotech.vrmarket.dashboard.app.commom.RecyclerViewAdapterC;
-import com.netforceinfotech.vrmarket.dashboard.app.commom.RowDataC;
+import com.netforceinfotech.vrmarket.app_detail.AppDetailActivity;
 import com.netforceinfotech.vrmarket.dashboard.app.featured.RecyclerViewAdapterF;
 import com.netforceinfotech.vrmarket.dashboard.app.featured.RowDataF;
 import com.netforceinfotech.vrmarket.general.Category;
@@ -33,20 +35,21 @@ import com.netforceinfotech.vrmarket.general.GlobleVariable;
 import com.netforceinfotech.vrmarket.general.MyCustomAdapter;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
+import com.poliveira.parallaxrecyclerview.ParallaxRecyclerAdapter;
+import com.squareup.picasso.Picasso;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.util.ArrayList;
-import okhttp3.Call;
-import okhttp3.Callback;
+
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AppFragment extends Fragment implements View.OnClickListener {
+public class AppFragmentParralex extends Fragment implements View.OnClickListener {
+
+
     MaterialRippleLayout rippleLeft, rippleRight;
     LinearLayout linearLayoutLeft, linearLayoutRight;
     private LinearLayoutManager layoutManagerFeatured;
@@ -56,56 +59,40 @@ public class AppFragment extends Fragment implements View.OnClickListener {
     ArrayList<RowDataF> rowDataFs = new ArrayList<>();
     private View view;
     private MaterialBetterSpinner category, free, latest;
-    private RecyclerView recyclerView_Commom;
-    private RecyclerViewAdapterC adapterCommom;
-    private ArrayList<RowDataC> rowDatasCC = new ArrayList<>();
-    private LinearLayoutManager layoutManagerCommom;
+    private ArrayList<RowDataC> rowDatasCs = new ArrayList<>();
     private SwipyRefreshLayout mSwipyRefreshLayout;
     // private SwipyRefreshLayout mSwipyRefreshLayout;
     public static final MediaType JSON
             = MediaType.parse("application/json; charset=utf-8");
     OkHttpClient client = new OkHttpClient();
     private JsonObject jsonObject;
-    private String type;
+    private String type = "";
     int page = 1;
     ProgressBar progressBarFeature, progressBarCommom;
     TextView textViewNoFeature, textViewNoCommom;
     private String imagePath;
-    boolean _areLecturesLoaded = false;
     private ArrayList<String> categoriesName, categoriesId, sortbyList, filterPricListe;
     private String selectedCategory = "", selectedPrice = "", selectedSortBy = "";
     boolean asc_sortby = true;
     private JsonArray staticapp;
+    private ParallaxRecyclerAdapter<RowDataC> commomAdapter;
+    private RecyclerView recyclerCommom;
 
-    public AppFragment() {
+    public AppFragmentParralex() {
         // Required empty public constructor
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser && !_areLecturesLoaded) {
-            _areLecturesLoaded = true;
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-        context = getActivity();
+        View view = inflater.inflate(R.layout.app_fragment_parralex, container, false);
         type = "apps";
         imagePath = ((GlobleVariable) getActivity().getApplication()).getImagePath();
-        view = inflater.inflate(R.layout.fragment_app, container, false);
+        context = getActivity();
+        progressBarCommom = (ProgressBar) view.findViewById(R.id.progressbar);
         textViewNoCommom = (TextView) view.findViewById(R.id.textViewNoCommomApp);
-        textViewNoFeature = (TextView) view.findViewById(R.id.textViewNoFeaturedApp);
-        progressBarCommom = (ProgressBar) view.findViewById(R.id.progressbar_commom);
-        progressBarFeature = (ProgressBar) view.findViewById(R.id.progressbar_feature);
-        rippleLeft = (MaterialRippleLayout) view.findViewById(R.id.rippleleft);
-        rippleRight = (MaterialRippleLayout) view.findViewById(R.id.rippleright);
-        linearLayoutLeft = (LinearLayout) view.findViewById(R.id.linearLeft);
-        linearLayoutRight = (LinearLayout) view.findViewById(R.id.linearRight);
         mSwipyRefreshLayout = (SwipyRefreshLayout) view.findViewById(R.id.swipyrefreshlayout);
         mSwipyRefreshLayout.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
             @Override
@@ -114,14 +101,88 @@ public class AppFragment extends Fragment implements View.OnClickListener {
                 getData(context, type, page + "", selectedCategory, selectedPrice, selectedSortBy, asc_sortby);
             }
         });
+
+        setupRecyclerView(view);
         getData(context, type, page + "", selectedCategory, selectedPrice, selectedSortBy, asc_sortby);
+        return view;
+    }
+
+    private void setupRecyclerView(View view) {
+        recyclerCommom = (RecyclerView) view.findViewById(R.id.recyclerCommom);
+        LinearLayoutManager manager = new LinearLayoutManager(context);
+        manager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerCommom.setLayoutManager(manager);
+        recyclerCommom.setHasFixedSize(true);
+        commomAdapter = new ParallaxRecyclerAdapter<RowDataC>(rowDatasCs) {
+
+            @Override
+            public void onBindViewHolderImpl(RecyclerView.ViewHolder viewHolder, ParallaxRecyclerAdapter parallaxRecyclerAdapter, final int i) {
+                String imagePathDetail = imagePath + rowDatasCs.get(i).image_url;
+                RecyclerViewHolderC holder = (RecyclerViewHolderC) viewHolder;
+                holder.materialRippleLayoutDownload.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(rowDatasCs.get(i).app_url)));
+                    }
+                });
+                holder.materialRippleLayoutInfo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, AppDetailActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("id", rowDatasCs.get(i).app_id);
+                        bundle.putString("app_name", rowDatasCs.get(i).app_name);
+                        intent.putExtras(bundle);
+                        context.startActivity(intent);
+                    }
+                });
+                Picasso.with(context)
+                        .load(imagePathDetail.replace(" ", "%20"))
+                        .placeholder(R.color.light_gray)
+                        .error(R.color.light_gray)
+                        .into(holder.imageView);
+                holder.textViewAppName.setText(rowDatasCs.get(i).app_name);
+                holder.textViewDeveloperName.setText(rowDatasCs.get(i).developer_name);
+                holder.textViewPrice.setText("Price: $ " + rowDatasCs.get(i).price);
+                holder.textViewRating.setText("Rating:" + rowDatasCs.get(i).rating);
+                holder.textViewCategory.setText(rowDatasCs.get(i).category);
+                if (rowDatasCs.get(i).staticApp) {
+                    holder.linearLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
+                } else {
+                    holder.linearLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
+                }
+
+            }
+
+            @Override
+            public RecyclerView.ViewHolder onCreateViewHolderImpl(ViewGroup viewGroup, ParallaxRecyclerAdapter parallaxRecyclerAdapter, int i) {
+                return new RecyclerViewHolderC(getActivity().getLayoutInflater().inflate(R.layout.row_app_c, viewGroup, false));
+            }
+
+            @Override
+            public int getItemCountImpl(ParallaxRecyclerAdapter parallaxRecyclerAdapter) {
+                return rowDatasCs.size();
+            }
+        };
+        setUpHeaderView();
+        recyclerCommom.setAdapter(commomAdapter);
+    }
+
+    private void setUpHeaderView() {
+        View headerView = getActivity().getLayoutInflater().inflate(R.layout.my_header_a, recyclerCommom, false);
+        textViewNoFeature = (TextView) headerView.findViewById(R.id.textViewNoFeaturedApp);
+        progressBarFeature = (ProgressBar) headerView.findViewById(R.id.progressbar_feature);
+        rippleLeft = (MaterialRippleLayout) headerView.findViewById(R.id.rippleleft);
+        rippleRight = (MaterialRippleLayout) headerView.findViewById(R.id.rippleright);
+        linearLayoutLeft = (LinearLayout) headerView.findViewById(R.id.linearLeft);
+        linearLayoutRight = (LinearLayout) headerView.findViewById(R.id.linearRight);
         linearLayoutLeft.setOnClickListener(this);
         linearLayoutRight.setOnClickListener(this);
         rippleRight.setOnClickListener(this);
         rippleLeft.setOnClickListener(this);
-        setupRecycleFeatured();
-        setupRecycleCommom();
-        setupDropDown(view);
+
+        setupRecycleFeatured(headerView);
+        setupDropDown(headerView);
         category.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -151,124 +212,9 @@ public class AppFragment extends Fragment implements View.OnClickListener {
                 progressBarCommom.setVisibility(View.VISIBLE);
             }
         });
-        return view;
-
-    }
-
-    private void getDataFilter(final Context context, String type, final String page, String selectedCategory, String selectedPrice, String selectedSortBy, boolean asc_sortby) {
-        String order = "asc";
-        if (asc_sortby) {
-            order = "asc";
-        } else {
-            order = "desc";
-        }
-        String url = getResources().getString(R.string.url);
-        url = url + "?page=" + page + "&type=" + type + "&category=" + selectedCategory + "&price=" + selectedPrice + "&col=" + selectedSortBy + "&order=" + order;
-        Log.i("result url", url);
-        setHeader();
-        Log.i("result page1", page);
-        Ion.with(context)
-                .load(url)
-                .setBodyParameter("type", type)
-                .setBodyParameter("page", page)
-                .asJsonObject()
-                .setCallback(new FutureCallback<JsonObject>() {
-                    @Override
-                    public void onCompleted(Exception e, JsonObject result) {
-                        mSwipyRefreshLayout.setRefreshing(false);
-                        progressBarFeature.setVisibility(View.GONE);
-                        progressBarCommom.setVisibility(View.GONE);
-                        if (result != null) {
-                            Log.i("result app", result.toString());
-                            String status = result.get("status").getAsString();
-                            if (status.equalsIgnoreCase("success")) {
-                                showMessage("Load complete...");
-                                AppFragment.this.page++;
-                                JsonArray commom = result.getAsJsonArray("common");
-                                if (commom.size() < 1) {
-                                    textViewNoCommom.setVisibility(View.VISIBLE);
-                                    recyclerView_Commom.setVisibility(View.GONE);
-                                } else {
-                                    textViewNoCommom.setVisibility(View.GONE);
-                                    recyclerView_Commom.setVisibility(View.VISIBLE);
-                                }
-                                updateCommomAdapter(commom, page);
-                            } else {
-                                rowDatasCC.clear();
-                                adapterCommom.notifyDataSetChanged();
-                                adapterCommom.notifyDataSetChanged();
-                                showMessage("No app found");
-                                JsonArray jsonArray = new JsonArray();
-                                updateCommomAdapter(jsonArray, page);
-                            }
-                        } else {
-                            Log.e("result app", e.toString());
-                        }
-                    }
-                });
-    }
+        commomAdapter.setParallaxHeader(headerView, recyclerCommom);
 
 
-    private void getData(final Context context, String type, final String page, String selectedCategory, String selectedPrice, String selectedSortBy, boolean asc_sortby) {
-
-        String order = "asc";
-        if (asc_sortby) {
-            order = "asc";
-        } else {
-            order = "desc";
-        }
-        String url = getResources().getString(R.string.url);
-        url = url + "?page=" + page + "&type=" + type + "&category=" + selectedCategory + "&price=" + selectedPrice + "&col=" + selectedSortBy + "&order=" + order;
-        Log.i("result url", url);
-        setHeader();
-        Log.i("result page1", page);
-        Ion.with(context)
-                .load(url)
-                .setBodyParameter("type", type)
-                .setBodyParameter("page", page)
-                .asJsonObject()
-                .setCallback(new FutureCallback<JsonObject>() {
-                    @Override
-                    public void onCompleted(Exception e, JsonObject result) {
-                        mSwipyRefreshLayout.setRefreshing(false);
-                        progressBarFeature.setVisibility(View.GONE);
-                        progressBarCommom.setVisibility(View.GONE);
-                        if (result != null) {
-                            Log.i("result app", result.toString());
-                            String status = result.get("status").getAsString();
-                            if (status.equalsIgnoreCase("success")) {
-                                showMessage("Load complete...");
-                                AppFragment.this.page++;
-                                if (page.equalsIgnoreCase("1")) {
-                                    JsonArray features = result.getAsJsonArray("featured");
-                                    if (features.size() < 1) {
-                                        textViewNoFeature.setVisibility(View.VISIBLE);
-                                        recyclerView_Featured.setVisibility(View.VISIBLE);
-                                    } else {
-                                        textViewNoFeature.setVisibility(View.GONE);
-                                        recyclerView_Featured.setVisibility(View.VISIBLE);
-                                    }
-                                    staticapp = result.getAsJsonArray("static");
-                                    updateFeatureAdapter(features);
-                                }
-                                JsonArray commom = result.getAsJsonArray("common");
-                                if (commom.size() < 1) {
-                                    textViewNoCommom.setVisibility(View.VISIBLE);
-                                    recyclerView_Commom.setVisibility(View.GONE);
-                                } else {
-                                    textViewNoCommom.setVisibility(View.GONE);
-                                    recyclerView_Commom.setVisibility(View.VISIBLE);
-                                }
-                                updateCommomAdapter(commom, page);
-                            } else {
-                                showMessage("No more app");
-
-                            }
-                        } else {
-                            Log.e("result app", e.toString());
-                        }
-                    }
-                });
     }
 
     private void setHeader() {
@@ -311,14 +257,74 @@ public class AppFragment extends Fragment implements View.OnClickListener {
         });
     }
 
+    private void getData(final Context context, String type, final String page, String selectedCategory, String selectedPrice, String selectedSortBy, boolean asc_sortby) {
+
+        String order = "asc";
+        if (asc_sortby) {
+            order = "asc";
+        } else {
+            order = "desc";
+        }
+        String url = getResources().getString(R.string.url);
+        url = url + "?page=" + page + "&type=" + type + "&category=" + selectedCategory + "&price=" + selectedPrice + "&col=" + selectedSortBy + "&order=" + order;
+        Log.i("result url", url);
+        setHeader();
+        Log.i("result page1", page);
+        Ion.with(context)
+                .load(url)
+                .setBodyParameter("type", type)
+                .setBodyParameter("page", page)
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        mSwipyRefreshLayout.setRefreshing(false);
+                        progressBarFeature.setVisibility(View.GONE);
+                        progressBarCommom.setVisibility(View.GONE);
+                        if (result != null) {
+                            Log.i("result app", result.toString());
+                            String status = result.get("status").getAsString();
+                            if (status.equalsIgnoreCase("success")) {
+                                showMessage("Load complete...");
+                                AppFragmentParralex.this.page++;
+                                if (page.equalsIgnoreCase("1")) {
+                                    JsonArray features = result.getAsJsonArray("featured");
+                                    if (features.size() < 1) {
+                                        textViewNoFeature.setVisibility(View.VISIBLE);
+                                        recyclerView_Featured.setVisibility(View.GONE);
+                                    } else {
+                                        textViewNoFeature.setVisibility(View.GONE);
+                                        recyclerView_Featured.setVisibility(View.VISIBLE);
+                                    }
+                                    staticapp = result.getAsJsonArray("static");
+                                    updateFeatureAdapter(features);
+                                }
+                                JsonArray commom = result.getAsJsonArray("common");
+                                if (commom.size() < 1) {
+                                    textViewNoCommom.setVisibility(View.GONE);
+                                } else {
+                                    textViewNoCommom.setVisibility(View.GONE);
+                                }
+                                updateCommomAdapter(commom, page);
+                            } else {
+                                showMessage("No more app");
+
+                            }
+                        } else {
+                            Log.e("result app", e.toString());
+                        }
+                    }
+                });
+    }
+
     private void updateCommomAdapter(JsonArray commom, String page) {
 
         if (page.equalsIgnoreCase("1")) {
             try {
-                rowDatasCC.clear();
+                rowDatasCs.clear();
                 for (int i = 0; i < staticapp.size(); i++) {
                     jsonObject = staticapp.get(i).getAsJsonObject();
-                    rowDatasCC.add(new RowDataC(jsonObject.get("id").getAsString(), jsonObject.get("product_name").getAsString(), jsonObject.get("developer_name").getAsString(), jsonObject.get("image").getAsString(), jsonObject.get("sales_price").getAsString(), "4.0", jsonObject.get("url").getAsString(), jsonObject.get("title").getAsString(),true));
+                    rowDatasCs.add(new RowDataC(jsonObject.get("id").getAsString(), jsonObject.get("product_name").getAsString(), jsonObject.get("developer_name").getAsString(), jsonObject.get("image").getAsString(), jsonObject.get("sales_price").getAsString(), "4.0", jsonObject.get("url").getAsString(), jsonObject.get("title").getAsString(), true));
                 }
             } catch (Exception ex) {
 
@@ -326,9 +332,9 @@ public class AppFragment extends Fragment implements View.OnClickListener {
         }
         for (int i = 0; i < commom.size(); i++) {
             jsonObject = commom.get(i).getAsJsonObject();
-            rowDatasCC.add(new RowDataC(jsonObject.get("id").getAsString(), jsonObject.get("product_name").getAsString(), jsonObject.get("developer_name").getAsString(), jsonObject.get("image").getAsString(), jsonObject.get("sales_price").getAsString(), "4.0", jsonObject.get("url").getAsString(), jsonObject.get("title").getAsString(),false));
+            rowDatasCs.add(new RowDataC(jsonObject.get("id").getAsString(), jsonObject.get("product_name").getAsString(), jsonObject.get("developer_name").getAsString(), jsonObject.get("image").getAsString(), jsonObject.get("sales_price").getAsString(), "4.0", jsonObject.get("url").getAsString(), jsonObject.get("title").getAsString(), false));
         }
-        adapterCommom.notifyDataSetChanged();
+        commomAdapter.notifyDataSetChanged();
     }
 
     private void updateFeatureAdapter(JsonArray features) {
@@ -344,17 +350,6 @@ public class AppFragment extends Fragment implements View.OnClickListener {
         adapterFeatured.notifyDataSetChanged();
     }
 
-    Call post(String url, String json, Callback callback) {
-        RequestBody body = RequestBody.create(JSON, json);
-        Request request = new Request.Builder()
-                .url(url)
-                .post(body)
-                .build();
-        Call call = client.newCall(request);
-        call.enqueue(callback);
-        return call;
-    }
-
     private void showMessage(String s) {
         Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
     }
@@ -368,8 +363,8 @@ public class AppFragment extends Fragment implements View.OnClickListener {
             categoriesName.add(categories.get(i).category);
         }
         sortbyList = new ArrayList<>();
-        sortbyList.add("Date Added");
-        sortbyList.add("Rating");
+        sortbyList.add("Latest");
+        sortbyList.add("Alphabet");
 
         filterPricListe = new ArrayList<>();
         filterPricListe.add("Free");
@@ -392,23 +387,13 @@ public class AppFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    private void setupRecycleFeatured() {
+    private void setupRecycleFeatured(View view) {
         recyclerView_Featured = (RecyclerView) view.findViewById(R.id.recyclerFeatured);
         layoutManagerFeatured = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         recyclerView_Featured.setLayoutManager(layoutManagerFeatured);
         adapterFeatured = new RecyclerViewAdapterF(context, rowDataFs, imagePath);
         recyclerView_Featured.setAdapter(adapterFeatured);
     }
-
-    private void setupRecycleCommom() {
-
-        recyclerView_Commom = (RecyclerView) view.findViewById(R.id.recyclerCommom);
-        layoutManagerCommom = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-        recyclerView_Commom.setLayoutManager(layoutManagerCommom);
-        adapterCommom = new RecyclerViewAdapterC(context, rowDatasCC, imagePath);
-        recyclerView_Commom.setAdapter(adapterCommom);
-    }
-
 
     @Override
     public void onClick(View v) {
@@ -424,7 +409,7 @@ public class AppFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.linearRight:
                 try {
-                    recyclerView_Featured.smoothScrollToPosition(layoutManagerFeatured.findLastVisibleItemPosition() +1);
+                    recyclerView_Featured.smoothScrollToPosition(layoutManagerFeatured.findLastVisibleItemPosition() + 1);
 
                     //recyclerView_Featured.scrollToPosition(RecyclerViewAdapter.position + 1);
                 } catch (Exception ex) {
@@ -434,4 +419,54 @@ public class AppFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    private void getDataFilter(final Context context, String type, final String page, String selectedCategory, String selectedPrice, String selectedSortBy, boolean asc_sortby) {
+        String order = "asc";
+        if (asc_sortby) {
+            order = "asc";
+        } else {
+            order = "desc";
+        }
+        String url = getResources().getString(R.string.url);
+        url = url + "?page=" + page + "&type=" + type + "&category=" + selectedCategory + "&price=" + selectedPrice + "&col=" + selectedSortBy + "&order=" + order;
+        Log.i("result url", url);
+        setHeader();
+        Log.i("result page1", page);
+        Ion.with(context)
+                .load(url)
+                .setBodyParameter("type", type)
+                .setBodyParameter("page", page)
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        mSwipyRefreshLayout.setRefreshing(false);
+                        progressBarFeature.setVisibility(View.GONE);
+                        progressBarCommom.setVisibility(View.GONE);
+                        if (result != null) {
+                            Log.i("result app", result.toString());
+                            String status = result.get("status").getAsString();
+                            if (status.equalsIgnoreCase("success")) {
+                                showMessage("Load complete...");
+                                AppFragmentParralex.this.page++;
+                                JsonArray commom = result.getAsJsonArray("common");
+                                if (commom.size() < 1) {
+                                    textViewNoCommom.setVisibility(View.GONE);
+                                } else {
+                                    textViewNoCommom.setVisibility(View.GONE);
+                                }
+                                updateCommomAdapter(commom, page);
+                            } else {
+                                rowDatasCs.clear();
+                                commomAdapter.notifyDataSetChanged();
+                                commomAdapter.notifyDataSetChanged();
+                                showMessage("No app found");
+                                JsonArray jsonArray = new JsonArray();
+                                updateCommomAdapter(jsonArray, page);
+                            }
+                        } else {
+                            Log.e("result app", e.toString());
+                        }
+                    }
+                });
+    }
 }

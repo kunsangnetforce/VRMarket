@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,6 +19,8 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
@@ -33,6 +36,7 @@ import com.netforceinfotech.vrmarket.app_detail.samecategory.RecyclerViewAdapter
 import com.netforceinfotech.vrmarket.app_detail.samecategory.RowDataS;
 import com.netforceinfotech.vrmarket.general.GlobleVariable;
 import com.netforceinfotech.vrmarket.general.NoInternet;
+import com.rengwuxian.materialedittext.MaterialEditText;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -53,6 +57,8 @@ public class AppDetailActivity extends AppCompatActivity implements View.OnClick
     LinearLayout linearLayout;
     ProgressBar progressBar;
     TextView textViewAppName, textViewDeveloperName, textViewCategory, textViewPrice, textViewRating, textViewDescription, textViewSimilar;
+    private String description = "";
+    private String app_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +68,7 @@ public class AppDetailActivity extends AppCompatActivity implements View.OnClick
         imagePath = ((GlobleVariable) getApplication()).getImagePath();
         Bundle bundle = getIntent().getExtras();
         String id = bundle.getString("id");
-        String app_name = bundle.getString("app_name");
+        app_name = bundle.getString("app_name");
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
         linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
         linearLayout.setVisibility(View.INVISIBLE);
@@ -85,6 +91,7 @@ public class AppDetailActivity extends AppCompatActivity implements View.OnClick
         textViewRating = (TextView) findViewById(R.id.textViewRating);
         textViewDescription = (TextView) findViewById(R.id.textViewDescription);
         textViewSimilar = (TextView) findViewById(R.id.textViewSimiar);
+        textViewDescription.setOnClickListener(this);
         setupRecycleFeatured();
     }
 
@@ -158,7 +165,7 @@ public class AppDetailActivity extends AppCompatActivity implements View.OnClick
         String price = data.get("sales_price").getAsString();
         String rating = data.get("rating").getAsString();
         url = data.get("url").getAsString();
-        String description = data.get("short_description").getAsString();
+        description = data.get("short_description").getAsString();
         JsonArray images = result.get("images").getAsJsonArray();
         Log.i("result images", "" + images.size());
         JsonArray similar = result.get("similar").getAsJsonArray();
@@ -268,7 +275,28 @@ public class AppDetailActivity extends AppCompatActivity implements View.OnClick
             case R.id.imageViewDownload:
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
                 break;
+            case R.id.textViewDescription:
+                showPopup(description);
+                break;
         }
+    }
+
+    private void showPopup(String description) {
+        boolean wrapInScrollView = true;
+        MaterialDialog dialog = new MaterialDialog.Builder(this)
+                .title(app_name)
+                .customView(R.layout.description, wrapInScrollView)
+                .positiveText(R.string.ok)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        dialog.dismiss();
+                    }
+                })
+
+                .show();
+        TextView textView = (TextView) dialog.findViewById(R.id.textView);
+        textView.setText(description);
     }
 
     public boolean isNetworkAvailable() {
