@@ -58,6 +58,7 @@ public class Splash extends AppCompatActivity {
                             Intent intent = new Intent(getApplicationContext(), Dashboard.class);
                             startActivity(intent);
                             finish();
+                            overridePendingTransition(R.anim.enter, R.anim.exit);
                         } else {
                             Intent intent = new Intent(getApplicationContext(), NoInternet.class);
                             startActivity(intent);

@@ -325,7 +325,8 @@ public class GameFragmentStickyFilter extends Fragment implements View.OnClickLi
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
                         mSwipyRefreshLayout.setRefreshing(false);
-                        progressBarFeature.setVisibility(View.GONE);if (result != null) {
+                        progressBarFeature.setVisibility(View.GONE);
+                        if (result != null) {
                             Log.i("result app", result.toString());
                             String status = result.get("status").getAsString();
                             if (status.equalsIgnoreCase("success")) {
@@ -344,7 +345,8 @@ public class GameFragmentStickyFilter extends Fragment implements View.OnClickLi
                                     updateFeatureAdapter(features);
                                 }
                                 JsonArray commom = result.getAsJsonArray("common");
-                                if (commom.size() < 1) {recyclerView_Commom.setVisibility(View.VISIBLE);
+                                if (commom.size() < 1) {
+                                    recyclerView_Commom.setVisibility(View.VISIBLE);
                                 } else {
                                     recyclerView_Commom.setVisibility(View.VISIBLE);
                                 }

@@ -348,7 +348,7 @@ public class AppFragmentStickyFilter extends Fragment implements View.OnClickLis
                                 }
                                 JsonArray commom = result.getAsJsonArray("common");
                                 if (commom.size() < 1) {
-                                    recyclerView_Commom.setVisibility(View.GONE);
+                                    recyclerView_Commom.setVisibility(View.VISIBLE);
                                 } else {
                                     recyclerView_Commom.setVisibility(View.VISIBLE);
                                 }

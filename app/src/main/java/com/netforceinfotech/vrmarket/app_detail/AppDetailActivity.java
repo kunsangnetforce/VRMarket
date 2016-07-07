@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Layout;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -56,7 +57,7 @@ public class AppDetailActivity extends AppCompatActivity implements View.OnClick
     ImageView imageView, imageViewDownload;
     LinearLayout linearLayout;
     ProgressBar progressBar;
-    TextView textViewAppName, textViewDeveloperName, textViewCategory, textViewPrice, textViewRating, textViewDescription, textViewSimilar;
+    TextView textViewAppName, textViewDeveloperName, textViewCategory, textViewPrice, textViewRating, textViewDescription, textViewSimilar,textViewShowmore;
     private String description = "";
     private String app_name;
 
@@ -79,7 +80,6 @@ public class AppDetailActivity extends AppCompatActivity implements View.OnClick
             startActivity(intent);
             finish();
         }
-        getAppDetail(id);
         setupToolBar(app_name);
         imageView = (ImageView) findViewById(R.id.imageView);
         imageViewDownload = (ImageView) findViewById(R.id.imageViewDownload);
@@ -91,8 +91,12 @@ public class AppDetailActivity extends AppCompatActivity implements View.OnClick
         textViewRating = (TextView) findViewById(R.id.textViewRating);
         textViewDescription = (TextView) findViewById(R.id.textViewDescription);
         textViewSimilar = (TextView) findViewById(R.id.textViewSimiar);
+        textViewShowmore= (TextView) findViewById(R.id.textViewShowmore);
         textViewDescription.setOnClickListener(this);
+        textViewShowmore.setOnClickListener(this);
         setupRecycleFeatured();
+        getAppDetail(id);
+
     }
 
     private void getAppDetail(String id) {
@@ -194,6 +198,18 @@ public class AppDetailActivity extends AppCompatActivity implements View.OnClick
         textViewSimilar.setText("More in '" + category + "'");
         linearLayout.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
+        Layout l = textViewDescription.getLayout();
+        if (l != null) {
+            int lines = l.getLineCount();
+            if (lines > 0)
+                if (l.getEllipsisCount(lines-1) > 0){
+                    textViewShowmore.setVisibility(View.VISIBLE);
+                }
+            else {
+                    textViewShowmore.setVisibility(View.GONE);
+                }
+                    //Log.d(TAG, "Text is ellipsized");
+        }
 
     }
 
@@ -278,6 +294,8 @@ public class AppDetailActivity extends AppCompatActivity implements View.OnClick
             case R.id.textViewDescription:
                 showPopup(description);
                 break;
+            case R.id.textViewShowmore:
+                showPopup(description);
         }
     }
 

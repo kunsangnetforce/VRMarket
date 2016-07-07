@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/colorPrimary"
     tools:context="com.netforceinfotech.vrmarket.app_detail.AppDetailActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -209,6 +210,17 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
                     android:text="@string/lorem" />
+                <TextView
+                    android:visibility="visible"
+                    android:id="@+id/textViewShowmore"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorSecondaryText"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/show_more"
+                    android:textStyle="bold"
+                    />
 
             </LinearLayout>
 
