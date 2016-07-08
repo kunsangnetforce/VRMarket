@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/colorPrimary"
+    android:orientation="vertical"
     tools:context="com.netforceinfotech.vrmarket.app_detail.AppDetailActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -40,14 +40,25 @@
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:focusableInTouchMode="true"
             android:orientation="vertical">
 
-            <com.daimajia.slider.library.SliderLayout
-                android:id="@+id/slider"
+            <android.support.v4.view.ViewPager
+                android:id="@+id/vie_pager"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_marginBottom="3dp"
-                android:layout_marginTop="3dp" />
+                android:layout_above="@+id/ll_login_signup">
+
+            </android.support.v4.view.ViewPager>
+
+            <com.viewpagerindicator.CirclePageIndicator
+                android:id="@+id/titles"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight=".05"
+                android:padding="10dip"
+                app:fillColor="#5698cf"
+                app:pageColor="#ffffff" />
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
@@ -114,8 +125,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="50"
-                                    android:text="Developer name"
-                                    android:textStyle="bold" />
+                                    android:text="Developer name" />
 
 
                             </LinearLayout>
@@ -161,7 +171,8 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="50"
                                     android:text="Price: $2.99"
-                                    android:textSize="12sp" />
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
 
                             </LinearLayout>
                         </LinearLayout>
@@ -203,24 +214,23 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:ellipsize="end"
-                    android:maxLines="3"
                     android:id="@+id/textViewDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
+                    android:ellipsize="end"
                     android:text="@string/lorem" />
+
                 <TextView
-                    android:visibility="visible"
                     android:id="@+id/textViewShowmore"
-                    android:textSize="16sp"
-                    android:textColor="@color/colorSecondaryText"
-                    android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:text="@string/show_more"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textSize="16sp"
                     android:textStyle="bold"
-                    />
+                    android:visibility="visible" />
 
             </LinearLayout>
 
@@ -243,7 +253,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp">
 
+
                 </android.support.v7.widget.RecyclerView>
+
+                <TextView
+                    android:id="@+id/textViewNoSimmilarApp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/no_app_found" />
+
 
             </LinearLayout>
         </LinearLayout>

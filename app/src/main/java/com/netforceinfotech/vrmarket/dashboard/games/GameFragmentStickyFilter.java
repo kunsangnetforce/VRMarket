@@ -119,7 +119,10 @@ public class GameFragmentStickyFilter extends Fragment implements View.OnClickLi
                 Log.i("result xxx", "clicked");
                 selectedCategory = categoriesId.get(position);
                 page = 1;
-                recyclerView_Commom.smoothScrollToPosition(layoutManagerFeatured.findFirstVisibleItemPosition());
+                try{
+                    recyclerView_Commom.smoothScrollToPosition(layoutManagerFeatured.findFirstVisibleItemPosition());
+                }catch (Exception ex){}
+
                 getDataFilter(context, type, page + "", selectedCategory, selectedPrice, selectedSortBy, asc_sortby);
             }
         });
@@ -128,7 +131,10 @@ public class GameFragmentStickyFilter extends Fragment implements View.OnClickLi
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 selectedPrice = filterPricListe.get(position).toLowerCase();
                 page = 1;
-                recyclerView_Commom.smoothScrollToPosition(layoutManagerFeatured.findFirstVisibleItemPosition());
+                try{
+                    recyclerView_Commom.smoothScrollToPosition(layoutManagerFeatured.findFirstVisibleItemPosition());
+                }catch (Exception ex){}
+
                 getDataFilter(context, type, page + "", selectedCategory, selectedPrice, selectedSortBy, asc_sortby);
             }
         });
@@ -142,7 +148,10 @@ public class GameFragmentStickyFilter extends Fragment implements View.OnClickLi
                 }
 
                 page = 1;
-                recyclerView_Commom.smoothScrollToPosition(layoutManagerFeatured.findFirstVisibleItemPosition());
+                try{
+                    recyclerView_Commom.smoothScrollToPosition(layoutManagerFeatured.findFirstVisibleItemPosition());
+                }catch (Exception ex){}
+
                 getDataFilter(context, type, page + "", selectedCategory, selectedPrice, selectedSortBy, asc_sortby);
                 asc_sortby = !asc_sortby;
             }
@@ -336,7 +345,7 @@ public class GameFragmentStickyFilter extends Fragment implements View.OnClickLi
                                     JsonArray features = result.getAsJsonArray("featured");
                                     if (features.size() < 1) {
                                         textViewNoFeature.setVisibility(View.VISIBLE);
-                                        recyclerView_Featured.setVisibility(View.VISIBLE);
+                                        recyclerView_Featured.setVisibility(View.GONE);
                                     } else {
                                         textViewNoFeature.setVisibility(View.GONE);
                                         recyclerView_Featured.setVisibility(View.VISIBLE);

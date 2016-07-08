@@ -66,7 +66,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="50"
                         android:text="Developer name"
-                        android:textStyle="bold" />
+                         />
 
 
                 </LinearLayout>
@@ -107,6 +107,7 @@
                     android:weightSum="100">
 
                     <TextView
+                        android:textStyle="bold"
                         android:id="@+id/textViewPrice"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"

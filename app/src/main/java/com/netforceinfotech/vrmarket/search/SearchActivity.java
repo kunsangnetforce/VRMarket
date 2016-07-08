@@ -9,6 +9,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.JsonArray;
@@ -37,12 +39,14 @@ public class SearchActivity extends AppCompatActivity {
     private RecyclerViewAdapter adapter;
     private List<RowData> rowDatasCC = new ArrayList<>();
     private String imagePath;
+    TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         imagePath = ((GlobleVariable) getApplication()).getImagePath();
+        textView = (TextView) findViewById(R.id.textView);
         setSearchView();
         setupToolBar();
         setupRecycle();
@@ -133,6 +137,11 @@ public class SearchActivity extends AppCompatActivity {
                                 rowDatasCC.clear();
                                 adapter.notifyDataSetChanged();
                                 adapter.notifyDataSetChanged();
+                                if (data.size() <= 0) {
+                                    textView.setVisibility(View.VISIBLE);
+                                } else {
+                                    textView.setVisibility(View.GONE);
+                                }
                                 for (int i = 0; i < data.size(); i++) {
 
                                     JsonObject jsonObject = data.get(i).getAsJsonObject();
@@ -146,6 +155,8 @@ public class SearchActivity extends AppCompatActivity {
 
 
                             } else {
+                                textView.setVisibility(View.VISIBLE);
+
                             }
                         }
 

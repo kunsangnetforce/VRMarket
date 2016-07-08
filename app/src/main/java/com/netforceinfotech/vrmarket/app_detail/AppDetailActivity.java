@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -26,6 +29,7 @@ import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.Cancellable;
@@ -39,6 +43,7 @@ import com.netforceinfotech.vrmarket.general.GlobleVariable;
 import com.netforceinfotech.vrmarket.general.NoInternet;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.squareup.picasso.Picasso;
+import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,9 +62,13 @@ public class AppDetailActivity extends AppCompatActivity implements View.OnClick
     ImageView imageView, imageViewDownload;
     LinearLayout linearLayout;
     ProgressBar progressBar;
-    TextView textViewAppName, textViewDeveloperName, textViewCategory, textViewPrice, textViewRating, textViewDescription, textViewSimilar,textViewShowmore;
+    TextView textViewAppName, textViewDeveloperName, textViewCategory, textViewPrice, textViewRating, textViewDescription, textViewSimilar, textViewShowmore, textViewNoSimilarApp;
     private String description = "";
     private String app_name;
+    private ViewPagerAdapter adapter;
+    private ViewPager viewPager;
+    private final Handler handler = new Handler();
+    public int value = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,17 +78,20 @@ public class AppDetailActivity extends AppCompatActivity implements View.OnClick
         imagePath = ((GlobleVariable) getApplication()).getImagePath();
         Bundle bundle = getIntent().getExtras();
         String id = bundle.getString("id");
+        Log.i("vr_market_id", id);
         app_name = bundle.getString("app_name");
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
         linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
         linearLayout.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.VISIBLE);
-        mDemoSlider = (SliderLayout) findViewById(R.id.slider);
+       // mDemoSlider = (SliderLayout) findViewById(R.id.slider);
         if (!isNetworkAvailable()) {
             Intent intent = new Intent(getApplicationContext(), NoInternet.class);
             startActivity(intent);
             finish();
         }
+        viewPager = (ViewPager) findViewById(R.id.vie_pager);
+
         setupToolBar(app_name);
         imageView = (ImageView) findViewById(R.id.imageView);
         imageViewDownload = (ImageView) findViewById(R.id.imageViewDownload);
@@ -91,8 +103,9 @@ public class AppDetailActivity extends AppCompatActivity implements View.OnClick
         textViewRating = (TextView) findViewById(R.id.textViewRating);
         textViewDescription = (TextView) findViewById(R.id.textViewDescription);
         textViewSimilar = (TextView) findViewById(R.id.textViewSimiar);
-        textViewShowmore= (TextView) findViewById(R.id.textViewShowmore);
+        textViewShowmore = (TextView) findViewById(R.id.textViewShowmore);
         textViewDescription.setOnClickListener(this);
+        textViewNoSimilarApp = (TextView) findViewById(R.id.textViewNoSimmilarApp);
         textViewShowmore.setOnClickListener(this);
         setupRecycleFeatured();
         getAppDetail(id);
@@ -102,6 +115,7 @@ public class AppDetailActivity extends AppCompatActivity implements View.OnClick
     private void getAppDetail(String id) {
         setHeader();
         String url = getResources().getString(R.string.url);
+        Log.i("vr_market_url", url + "?id=" + id);
         Ion.with(context)
                 .load(url + "?id=" + id)
                 .setBodyParameter("id", id)
@@ -114,8 +128,12 @@ public class AppDetailActivity extends AppCompatActivity implements View.OnClick
                             String status = result.get("status").getAsString();
                             if (status.equalsIgnoreCase("success")) {
                                 setAppDetail(result);
+                            } else if (status.equalsIgnoreCase("failed")) {
+                                progressBar.setVisibility(View.GONE);
+                                Toast.makeText(AppDetailActivity.this, "Error getting data. Please try again", Toast.LENGTH_SHORT).show();
                             }
                         }
+
                     }
                 });
     }
@@ -202,30 +220,34 @@ public class AppDetailActivity extends AppCompatActivity implements View.OnClick
         if (l != null) {
             int lines = l.getLineCount();
             if (lines > 0)
-                if (l.getEllipsisCount(lines-1) > 0){
+                if (l.getEllipsisCount(lines - 1) > 0) {
                     textViewShowmore.setVisibility(View.VISIBLE);
-                }
-            else {
+                } else {
                     textViewShowmore.setVisibility(View.GONE);
                 }
-                    //Log.d(TAG, "Text is ellipsized");
+            //Log.d(TAG, "Text is ellipsized");
         }
 
     }
 
     private void setupSimilar(JsonArray similar) {
-        for (int i = 0; i < similar.size(); i++) {
-            JsonObject jsonObject = similar.get(i).getAsJsonObject();
-            String id = jsonObject.get("id").getAsString();
-            String image = jsonObject.get("image").getAsString();
-            String appname = jsonObject.get("product_name").getAsString();
-            rowDataS.add(new RowDataS(id, appname, image));
+        if (similar.size() <= 0) {
+            textViewNoSimilarApp.setVisibility(View.VISIBLE);
+        } else {
+            textViewNoSimilarApp.setVisibility(View.GONE);
+            for (int i = 0; i < similar.size(); i++) {
+                JsonObject jsonObject = similar.get(i).getAsJsonObject();
+                String id = jsonObject.get("id").getAsString();
+                String image = jsonObject.get("image").getAsString();
+                String appname = jsonObject.get("product_name").getAsString();
+                rowDataS.add(new RowDataS(id, appname, image));
+            }
         }
         adapterSame.notifyDataSetChanged();
     }
 
-    private void setupSlider(ArrayList<String> arrayList) {
-        HashMap<String, String> url_maps = new HashMap<String, String>();
+    private void setupSlider(final ArrayList<String> arrayList) {
+       /* HashMap<String, String> url_maps = new HashMap<String, String>();
         for (int i = 0; i < arrayList.size(); i++) {
             Log.i("result iterate", "" + i);
             url_maps.put("" + i, imagePath + arrayList.get(i));
@@ -237,7 +259,7 @@ public class AppDetailActivity extends AppCompatActivity implements View.OnClick
             textSliderView
                     .description(name)
                     .image(url_maps.get(name))
-                    .setScaleType(BaseSliderView.ScaleType.Fit)
+                    .setScaleType(BaseSliderView.ScaleType.FitCenterCrop)
             ;
 
             //add your extra information
@@ -250,7 +272,27 @@ public class AppDetailActivity extends AppCompatActivity implements View.OnClick
         mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
         mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
         mDemoSlider.setCustomAnimation(new DescriptionAnimation());
-        mDemoSlider.setDuration(4000);
+        mDemoSlider.setDuration(4000);*/
+        adapter = new ViewPagerAdapter(AppDetailActivity.this,arrayList,imagePath);
+
+        viewPager.setAdapter(adapter);
+        CirclePageIndicator titleIndicator = (CirclePageIndicator) findViewById(R.id.titles);
+        titleIndicator.setViewPager(viewPager);
+
+        final Runnable r = new Runnable() {
+            public void run() {
+
+                viewPager.setCurrentItem(value, true);
+                handler.postDelayed(this, 2000);
+
+                if (value == arrayList.size()) {
+                    value = -1;
+                }
+                value++;
+            }
+        };
+        handler.postDelayed(r, 2000);
+
     }
 
     @Override
