@@ -24,7 +24,7 @@ public class RecyclerViewHolderS extends RecyclerView.ViewHolder {
         //implementing onClickListener
         view = itemView;
         imageView= (ImageView) view.findViewById(R.id.imageView);
-        textView = (TextView) view.findViewById(R.id.textView);
+        textView = (TextView) view.findViewById(R.id.textViewAppName);
         materialRippleLayout = (MaterialRippleLayout) view.findViewById(R.id.ripple);
 
     }

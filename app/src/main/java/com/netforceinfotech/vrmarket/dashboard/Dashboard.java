@@ -52,11 +52,12 @@ public class Dashboard extends AppCompatActivity {
         final PrimaryDrawerItem about = new PrimaryDrawerItem().withName(R.string.about);
         PrimaryDrawerItem contact = new PrimaryDrawerItem().withName(R.string.contact);
         final PrimaryDrawerItem privacy = new PrimaryDrawerItem().withName(R.string.privacy);
+        final PrimaryDrawerItem share = new PrimaryDrawerItem().withName(R.string.share);
         Drawer result = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
                 .addDrawerItems(
-                        home, about, contact, privacy
+                        home, about, contact, privacy, share
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
@@ -75,8 +76,11 @@ public class Dashboard extends AppCompatActivity {
                             case 3:
                                 setupPrivacyPolicy();
                                 break;
+                            case 4:
+                                shareData();
+                                break;
                             default:
-                                setupDashboard();
+                                shareData();
 
                         }
                         return false;
@@ -127,6 +131,15 @@ public class Dashboard extends AppCompatActivity {
         contactFragment = new ContactFragment();
         String tagName = contactFragment.getClass().getName();
         replaceFragment(contactFragment, tagName);
+    }
+
+    private void shareData() {
+        String shareBody = "VR MARKET- Discover Best VR Apps and Games";
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
+        sendIntent.setType("text/plain");
+        startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
     }
 
     private void setupPrivacyPolicy() {

@@ -70,11 +70,17 @@ public class RecyclerViewAdapterC extends RecyclerView.Adapter<RecyclerViewHolde
                 .into(holder.imageView);
         holder.textViewAppName.setText(itemList.get(position).app_name);
         holder.textViewDeveloperName.setText(itemList.get(position).developer_name);
-        holder.textViewPrice.setText("Price: $ " + itemList.get(position).price);
-        holder.textViewRating.setText("Rating:" + itemList.get(position).rating);
+        float price=Float.parseFloat(itemList.get(position).price);
+        if(price==0){
+            holder.textViewPrice.setText("Price: Free");
+        }
+        else {
+            holder.textViewPrice.setText("Price: $ " + itemList.get(position).price);
+        }
+        holder.textViewRating.setText("Rating: " + itemList.get(position).rating);
         holder.textViewCategory.setText(itemList.get(position).category);
         if (itemList.get(position).staticApp) {
-            holder.linearLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
+            holder.linearLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
         }
         else {
             holder.linearLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));

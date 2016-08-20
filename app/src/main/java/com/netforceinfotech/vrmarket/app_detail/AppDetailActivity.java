@@ -25,11 +25,7 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
-import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
-import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.Cancellable;
@@ -41,12 +37,12 @@ import com.netforceinfotech.vrmarket.app_detail.samecategory.RecyclerViewAdapter
 import com.netforceinfotech.vrmarket.app_detail.samecategory.RowDataS;
 import com.netforceinfotech.vrmarket.general.GlobleVariable;
 import com.netforceinfotech.vrmarket.general.NoInternet;
-import com.rengwuxian.materialedittext.MaterialEditText;
 import com.squareup.picasso.Picasso;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+
+import at.blogc.android.views.ExpandableTextView;
 
 public class AppDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -69,6 +65,7 @@ public class AppDetailActivity extends AppCompatActivity implements View.OnClick
     private ViewPager viewPager;
     private final Handler handler = new Handler();
     public int value = 0;
+    ExpandableTextView expandableTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +81,8 @@ public class AppDetailActivity extends AppCompatActivity implements View.OnClick
         linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
         linearLayout.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.VISIBLE);
-       // mDemoSlider = (SliderLayout) findViewById(R.id.slider);
+        expandableTextView = (ExpandableTextView) findViewById(R.id.expandableTextView);
+        // mDemoSlider = (SliderLayout) findViewById(R.id.slider);
         if (!isNetworkAvailable()) {
             Intent intent = new Intent(getApplicationContext(), NoInternet.class);
             startActivity(intent);
@@ -182,12 +180,13 @@ public class AppDetailActivity extends AppCompatActivity implements View.OnClick
         JsonObject data = result.get("data").getAsJsonObject();
         String image = data.get("image").getAsString();
         String appName = data.get("product_name").getAsString();
+        String description=data.get("short_description").getAsString();
+        Log.i("kunsang_desc",description);
         String developerName = data.get("developer_name").getAsString();
         String category = data.get("title").getAsString();
-        String price = data.get("sales_price").getAsString();
+        String pricestring = data.get("sales_price").getAsString();
         String rating = data.get("rating").getAsString();
         url = data.get("url").getAsString();
-        description = data.get("short_description").getAsString();
         JsonArray images = result.get("images").getAsJsonArray();
         Log.i("result images", "" + images.size());
         JsonArray similar = result.get("similar").getAsJsonArray();
@@ -210,13 +209,19 @@ public class AppDetailActivity extends AppCompatActivity implements View.OnClick
         textViewAppName.setText(appName);
         textViewDeveloperName.setText(developerName);
         textViewCategory.setText(category);
-        textViewPrice.setText("Price:$" + price);
-        textViewRating.setText("Rating:" + rating);
+        float price = Float.parseFloat(pricestring);
+        if (price == 0) {
+            textViewPrice.setText("Price: Free");
+        } else {
+            textViewPrice.setText("Price: $ " + pricestring);
+        }
+        textViewRating.setText("Rating: " + rating);
         textViewDescription.setText(description);
+        expandableTextView.setText(description);
         textViewSimilar.setText("More in '" + category + "'");
         linearLayout.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
-        Layout l = textViewDescription.getLayout();
+        Layout l = expandableTextView.getLayout();
         if (l != null) {
             int lines = l.getLineCount();
             if (lines > 0)
@@ -273,7 +278,7 @@ public class AppDetailActivity extends AppCompatActivity implements View.OnClick
         mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
         mDemoSlider.setCustomAnimation(new DescriptionAnimation());
         mDemoSlider.setDuration(4000);*/
-        adapter = new ViewPagerAdapter(AppDetailActivity.this,arrayList,imagePath);
+        adapter = new ViewPagerAdapter(AppDetailActivity.this, arrayList, imagePath);
 
         viewPager.setAdapter(adapter);
         CirclePageIndicator titleIndicator = (CirclePageIndicator) findViewById(R.id.titles);
@@ -283,7 +288,7 @@ public class AppDetailActivity extends AppCompatActivity implements View.OnClick
             public void run() {
 
                 viewPager.setCurrentItem(value, true);
-                handler.postDelayed(this, 2000);
+                handler.postDelayed(this, 3500);
 
                 if (value == arrayList.size()) {
                     value = -1;
@@ -291,7 +296,7 @@ public class AppDetailActivity extends AppCompatActivity implements View.OnClick
                 value++;
             }
         };
-        handler.postDelayed(r, 2000);
+        handler.postDelayed(r, 3500);
 
     }
 
@@ -337,7 +342,16 @@ public class AppDetailActivity extends AppCompatActivity implements View.OnClick
                 showPopup(description);
                 break;
             case R.id.textViewShowmore:
-                showPopup(description);
+                if (expandableTextView.isExpanded())
+                {
+                    expandableTextView.collapse();
+                    textViewShowmore.setText(R.string.show_more);
+                }
+                else
+                {
+                    expandableTextView.expand();
+                    textViewShowmore.setText(R.string.show_less);
+                }
         }
     }
 
@@ -355,7 +369,7 @@ public class AppDetailActivity extends AppCompatActivity implements View.OnClick
                 })
 
                 .show();
-        TextView textView = (TextView) dialog.findViewById(R.id.textView);
+        TextView textView = (TextView) dialog.findViewById(R.id.textViewAppName);
         textView.setText(description);
     }
 

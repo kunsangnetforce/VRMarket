@@ -25,6 +25,7 @@ public class PrivacyPolicyFragment extends Fragment {
 
     Context context;
     TextView textView;
+
     public PrivacyPolicyFragment() {
         // Required empty public constructor
     }
@@ -34,12 +35,13 @@ public class PrivacyPolicyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_privacy_policy, container, false);
-        context=getActivity();
-        textView= (TextView) view.findViewById(R.id.textView);
+        View view = inflater.inflate(R.layout.fragment_privacy_policy, container, false);
+        context = getActivity();
+        textView = (TextView) view.findViewById(R.id.textViewAppName);
         getPrivacyPolicy();
         return view;
     }
+
     private void getPrivacyPolicy() {
         setHeader();
         String url = getResources().getString(R.string.purl);
@@ -60,6 +62,8 @@ public class PrivacyPolicyFragment extends Fragment {
                             } else {
                                 Toast.makeText(context, "Something went wrong... try again", Toast.LENGTH_SHORT).show();
                             }
+                        } else {
+                            Toast.makeText(context, "Something went wrong... try again", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

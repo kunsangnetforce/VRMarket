@@ -34,7 +34,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
     public RecyclerViewAdapter(Context context, List<RowData> itemList, String imagePath) {
         this.itemList = itemList;
         this.context = context;
-        this.imagePath=imagePath;
+        this.imagePath = imagePath;
 
     }
 
@@ -46,15 +46,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
     }
 
     @Override
-    public void onBindViewHolder(RecyclerViewHolder holder, final int position) {
+    public void onBindViewHolder(final RecyclerViewHolder holder, final int position) {
         this.position = position;
-        String imagePathDetail=imagePath + itemList.get(position).image_url;
-        holder.textView.setText(itemList.get(position).app_name);
+        String imagePathDetail = imagePath + itemList.get(position).image_url;
+        holder.textViewAppName.setText(itemList.get(position).app_name);
         Picasso.with(context)
                 .load(imagePathDetail.replace(" ", "%20"))
                 .placeholder(R.color.light_gray)
                 .error(R.color.light_gray)
                 .into(holder.imageView);
+        holder.textViewDeveloperName.setText(itemList.get(position).developerName);
+        holder.ratingBar.setRating(Float.parseFloat(itemList.get(position).rating));
         holder.materialRippleLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,9 +64,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 Bundle bundle = new Bundle();
                 bundle.putString("id", itemList.get(position).app_id);
-                bundle.putString("app_name",itemList.get(position).app_name);
+                bundle.putString("app_name", itemList.get(position).app_name);
                 intent.putExtras(bundle);
                 context.startActivity(intent);
+
             }
         });
     }

@@ -75,6 +75,9 @@ public class ContactFragment extends Fragment {
                                 Toast.makeText(context, "Something went wrong... try again", Toast.LENGTH_SHORT).show();
                             }
                         }
+                        else {
+                            Toast.makeText(context, "Something went wrong... try again", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
     }

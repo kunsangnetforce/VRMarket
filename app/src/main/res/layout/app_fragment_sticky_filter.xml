@@ -1,15 +1,25 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:tag="@string/gamefragment"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.netforceinfotech.vrmarket.dashboard.app.AppFragmentStickyFilter">
+
+    <ProgressBar
+        android:id="@+id/progressbarMain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
     <LinearLayout
+        android:id="@+id/linearLayoutContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="visible">
 
         <com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
             android:id="@+id/swipyrefreshlayout"
@@ -20,15 +30,16 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerCommom"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
+                android:layout_height="wrap_content" />
         </com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout>
     </LinearLayout>
+
     <FrameLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="@dimen/max_height_header"
-        android:background="@color/colorPrimary">
+        android:background="@color/colorPrimary"
+        android:visibility="visible">
 
         <LinearLayout
             android:id="@+id/linearLayoutFeature"
@@ -66,10 +77,6 @@
                 android:layout_weight="80"
                 android:gravity="center">
 
-                <ProgressBar
-                    android:id="@+id/progressbar_feature"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/textViewNoFeaturedApp"
@@ -109,68 +116,155 @@
         </LinearLayout>
 
         <LinearLayout
-            android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:background="@color/white"
-            android:orientation="horizontal"
-            android:weightSum="150">
+            android:elevation="6dp"
+            android:orientation="vertical">
+
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="50"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:layout_gravity="bottom"
+                android:background="@color/white"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="150">
 
-                <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-                    android:id="@+id/category"
-                    android:layout_width="wrap_content"
+                <com.balysv.materialripple.MaterialRippleLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:dropDownWidth="150dp"
-                    android:gravity="center"
-                    android:hint="@string/category"
-                    android:textSize="12sp" />
+                    android:layout_weight="50">
+
+                    <LinearLayout
+                        android:id="@+id/linearLayoutCategory"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:padding="6dp"
+                        android:weightSum="100">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="80"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/textViewCategory"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/category" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="20">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginLeft="3dp"
+                                android:src="@drawable/ic_drop_down" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </com.balysv.materialripple.MaterialRippleLayout>
+                <com.balysv.materialripple.MaterialRippleLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50">
+
+                    <LinearLayout
+                        android:id="@+id/linearLayoutSortBy"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:padding="6dp"
+                        android:weightSum="100">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="80"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/textViewSortBy"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/sort" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="20">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginLeft="3dp"
+                                android:src="@drawable/ic_drop_down" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </com.balysv.materialripple.MaterialRippleLayout>
+                <com.balysv.materialripple.MaterialRippleLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50">
+
+                    <LinearLayout
+                        android:id="@+id/linearLayoutPrice"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:padding="6dp"
+                        android:weightSum="100">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="80"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/textViewPrice"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/price" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="20">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginLeft="3dp"
+                                android:src="@drawable/ic_drop_down" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </com.balysv.materialripple.MaterialRippleLayout>
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="50"
-                android:gravity="center"
-                android:orientation="horizontal">
 
-                <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-                    android:id="@+id/latest"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:dropDownWidth="150dp"
-                    android:gravity="center"
-                    android:hint="@string/sort"
-                    android:textSize="12sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="50"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-                    android:id="@+id/free"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:dropDownWidth="150dp"
-                    android:gravity="center"
-                    android:hint="@string/price"
-                    android:textSize="12sp" />
-
-            </LinearLayout>
+            <View
+                android:id="@+id/toolbar_shadow"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="@drawable/drop_shadow" />
         </LinearLayout>
     </FrameLayout>
 </FrameLayout>

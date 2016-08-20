@@ -23,4 +23,7 @@
     <string name="gamefragment">GameFragment</string>
     <string name="ok">OK</string>
     <string name="show_more">Show more</string>
+    <string name="show_less">Show less</string>
+    <string name="share">Share</string>
+    <string name="send_to">Share it with...</string>
 </resources>

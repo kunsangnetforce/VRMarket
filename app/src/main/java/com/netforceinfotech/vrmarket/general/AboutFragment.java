@@ -36,7 +36,7 @@ public class AboutFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_about_us, container, false);
-        textView = (TextView) view.findViewById(R.id.textView);
+        textView = (TextView) view.findViewById(R.id.textViewAppName);
         context = getActivity();
         getAbout();
         return view;
@@ -62,6 +62,9 @@ public class AboutFragment extends Fragment {
                             } else {
                                 Toast.makeText(context, "Something went wrong... try again", Toast.LENGTH_SHORT).show();
                             }
+                        }
+                        else {
+                            Toast.makeText(context, "Something went wrong... try again", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

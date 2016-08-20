@@ -14,14 +14,16 @@
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/toolbar"
-            android:elevation="6dp"
             android:minHeight="?attr/actionBarSize"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:tabIndicatorColor="@color/md_black_1000"
-            app:tabSelectedTextColor="@color/md_black_1000"
-            app:tabTextColor="#000000" />
-
+            app:tabIndicatorColor="@color/colorPrimaryText"
+            app:tabSelectedTextColor="@color/colorPrimaryText"
+            app:tabTextColor="@color/grey" />
+        <View
+            android:id="@+id/toolbar_shadow"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="@drawable/drop_shadow" />
         <com.netforceinfotech.vrmarket.general.CustomViewPager
             android:id="@+id/pager"
             android:layout_width="match_parent"

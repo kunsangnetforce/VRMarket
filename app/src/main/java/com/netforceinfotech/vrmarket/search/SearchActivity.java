@@ -6,10 +6,18 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,13 +48,81 @@ public class SearchActivity extends AppCompatActivity {
     private List<RowData> rowDatasCC = new ArrayList<>();
     private String imagePath;
     TextView textView;
+    ImageView imageViewSearch, imageViewBack;
+    EditText editText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
         imagePath = ((GlobleVariable) getApplication()).getImagePath();
-        textView = (TextView) findViewById(R.id.textView);
+        textView = (TextView) findViewById(R.id.textViewAppName);
+        imageViewBack = (ImageView) findViewById(R.id.imageViewback);
+        imageViewSearch = (ImageView) findViewById(R.id.imageViewSearch);
+        imageViewBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+            }
+        });
+        editText = (EditText) findViewById(R.id.edittextSearch);
+        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    View view = getCurrentFocus();
+                    if (view != null) {
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    }
+                    if (v.length() > 2) {
+                        getData(getApplicationContext(), v.getText().toString());
+                    } else {
+                        Toast.makeText(SearchActivity.this, "Input atleast 3 character", Toast.LENGTH_SHORT).show();
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() > 2) {
+                    getData(getApplicationContext(), s.toString());
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        editText.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                imageViewSearch.setImageResource(R.drawable.met_ic_close);
+                return false;
+            }
+        });
+        imageViewSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editText.setText("");
+            }
+        });
         setSearchView();
         setupToolBar();
         setupRecycle();
@@ -87,7 +163,13 @@ public class SearchActivity extends AppCompatActivity {
             public boolean onQueryTextSubmit(String query) {
                 //Do some magic
                 getData(getApplicationContext(), query);
-                return false;
+                searchView.setHint(query);
+                View view = SearchActivity.this.getCurrentFocus();
+                if (view != null) {
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                }
+                return true;
             }
 
             @Override
@@ -148,7 +230,9 @@ public class SearchActivity extends AppCompatActivity {
                                     String name = jsonObject.get("product_name").getAsString();
                                     String id = jsonObject.get("id").getAsString();
                                     String image = jsonObject.get("image").getAsString();
-                                    rowDatasCC.add(new RowData(id, name, image));
+                                    String developer_name = jsonObject.get("developer_name").getAsString();
+                                    String rating = jsonObject.get("rating").getAsString();
+                                    rowDatasCC.add(new RowData(id, name, image, developer_name, rating));
                                 }
                                 adapter.notifyDataSetChanged();
                                 adapter.notifyDataSetChanged();
@@ -156,8 +240,12 @@ public class SearchActivity extends AppCompatActivity {
 
                             } else {
                                 textView.setVisibility(View.VISIBLE);
+                                rowDatasCC.clear();
+                                adapter.notifyDataSetChanged();
 
                             }
+                        } else {
+                            Toast.makeText(context, "Something went wrong... try again", Toast.LENGTH_SHORT).show();
                         }
 
                     }

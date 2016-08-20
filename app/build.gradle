@@ -48,5 +48,8 @@ dependencies {
     compile 'com.github.carlonzo.stikkyheader:core:0.0.3-SNAPSHOT'
     compile 'com.afollestad.material-dialogs:core:0.8.6.0'
     compile 'fr.avianey.com.viewpagerindicator:library:2.4.1.1@aar'
+    compile 'at.blogc:expandabletextview:1.0.3'
+    compile 'com.github.rey5137:material:1.2.4'
+    compile 'com.shehabic.droppy:Droppy:0.5.1@aar'
 
 }

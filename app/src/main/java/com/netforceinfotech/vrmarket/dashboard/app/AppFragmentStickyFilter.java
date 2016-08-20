@@ -4,14 +4,13 @@ package com.netforceinfotech.vrmarket.dashboard.app;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -34,11 +33,12 @@ import com.netforceinfotech.vrmarket.general.GlobleVariable;
 import com.netforceinfotech.vrmarket.general.MyCustomAdapter;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
-import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
+import com.shehabic.droppy.DroppyClickCallbackInterface;
+import com.shehabic.droppy.DroppyMenuItem;
+import com.shehabic.droppy.DroppyMenuPopup;
 
 import java.util.ArrayList;
 
-import it.carlom.stikkyheader.core.StikkyHeader;
 import it.carlom.stikkyheader.core.StikkyHeaderBuilder;
 import it.carlom.stikkyheader.core.animator.AnimatorBuilder;
 import it.carlom.stikkyheader.core.animator.HeaderStikkyAnimator;
@@ -57,7 +57,6 @@ public class AppFragmentStickyFilter extends Fragment implements View.OnClickLis
     private RecyclerViewAdapterF adapterFeatured;
     ArrayList<RowDataF> rowDataFs = new ArrayList<>();
     private View view;
-    private MaterialBetterSpinner category, free, latest;
     private RecyclerView recyclerView_Commom;
     private RecyclerViewAdapterC adapterCommom;
     private ArrayList<RowDataC> rowDatasCC = new ArrayList<>();
@@ -70,15 +69,17 @@ public class AppFragmentStickyFilter extends Fragment implements View.OnClickLis
     private JsonObject jsonObject;
     private String type;
     int page = 1;
-    ProgressBar progressBarFeature;
-    TextView textViewNoFeature;
+    TextView textViewNoFeature, textViewCategory, textViewPrice, textViewSortby;
     private String imagePath;
     boolean _areLecturesLoaded = false;
     private ArrayList<String> categoriesName, categoriesId, sortbyList, filterPricListe;
     private String selectedCategory = "", selectedPrice = "", selectedSortBy = "";
-    boolean asc_sortby = true;
+    boolean asc_sortby = false;
     private JsonArray staticapp;
     private StikkyHeaderBuilder stikkyHeader;
+    LinearLayout linearLayoutPrice, linearLayoutCategory, linearLayoutSortby, linearLayoutContent;
+    FrameLayout frameLayoutHeader;
+    ProgressBar progressBarMain;
 
     public AppFragmentStickyFilter() {
         // Required empty public constructor
@@ -93,13 +94,28 @@ public class AppFragmentStickyFilter extends Fragment implements View.OnClickLis
         context = getActivity();
         type = "apps";
         imagePath = ((GlobleVariable) getActivity().getApplication()).getImagePath();
+        initView(view);
+        setupDropDown1(view);
+
+        return view;
+    }
+
+    private void initView(View view) {
+        progressBarMain = (ProgressBar) view.findViewById(R.id.progressbarMain);
+        frameLayoutHeader = (FrameLayout) view.findViewById(R.id.header);
+        linearLayoutContent = (LinearLayout) view.findViewById(R.id.linearLayoutContent);
+        textViewCategory = (TextView) view.findViewById(R.id.textViewCategory);
+        textViewPrice = (TextView) view.findViewById(R.id.textViewPrice);
+        textViewSortby = (TextView) view.findViewById(R.id.textViewSortBy);
         textViewNoFeature = (TextView) view.findViewById(R.id.textViewNoFeaturedApp);
-        progressBarFeature = (ProgressBar) view.findViewById(R.id.progressbar_feature);
         rippleLeft = (MaterialRippleLayout) view.findViewById(R.id.rippleleft);
         rippleRight = (MaterialRippleLayout) view.findViewById(R.id.rippleright);
         linearLayoutLeft = (LinearLayout) view.findViewById(R.id.linearLeft);
         linearLayoutRight = (LinearLayout) view.findViewById(R.id.linearRight);
         mSwipyRefreshLayout = (SwipyRefreshLayout) view.findViewById(R.id.swipyrefreshlayout);
+        linearLayoutCategory = (LinearLayout) view.findViewById(R.id.linearLayoutCategory);
+        linearLayoutSortby = (LinearLayout) view.findViewById(R.id.linearLayoutSortBy);
+        linearLayoutPrice = (LinearLayout) view.findViewById(R.id.linearLayoutPrice);
         mSwipyRefreshLayout.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh(SwipyRefreshLayoutDirection direction) {
@@ -114,54 +130,87 @@ public class AppFragmentStickyFilter extends Fragment implements View.OnClickLis
         rippleLeft.setOnClickListener(this);
         setupRecycleFeatured();
         setupRecycleCommom();
-        setupDropDown(view);
-        category.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    }
+
+    private void setupDropDown1(View view) {
+        ArrayList<Category> categories = ((GlobleVariable) getActivity().getApplication()).getCategories();
+        categoriesName = new ArrayList<>();
+        categoriesId = new ArrayList<>();
+
+        for (int i = 0; i < categories.size(); i++) {
+            categoriesId.add(categories.get(i).id);
+            categoriesName.add(categories.get(i).category);
+        }
+        sortbyList = new ArrayList<>();
+        sortbyList.add("Date Added");
+        sortbyList.add("Rating");
+
+        filterPricListe = new ArrayList<>();
+        filterPricListe.add("Free");
+        filterPricListe.add("Paid");
+        filterPricListe.add("All");
+        DroppyMenuPopup.Builder droppyMenuCategory = new DroppyMenuPopup.Builder(context, linearLayoutCategory);
+
+        for (int i = 0; i < categoriesName.size(); i++) {
+            droppyMenuCategory.addMenuItem(new DroppyMenuItem(categoriesName.get(i)));
+        }
+        droppyMenuCategory.setOnClick(new DroppyClickCallbackInterface() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.i("result xxx", "clicked");
-                selectedCategory = categoriesId.get(position);
+            public void call(View v, int id) {
+                selectedCategory = categoriesId.get(id);
                 page = 1;
-                try{
+                try {
                     recyclerView_Commom.smoothScrollToPosition(layoutManagerFeatured.findFirstVisibleItemPosition());
-                }catch (Exception ex){
+                } catch (Exception ex) {
 
                 }
-
+                textViewCategory.setText(categoriesName.get(id));
                 getDataFilter(context, type, page + "", selectedCategory, selectedPrice, selectedSortBy, asc_sortby);
             }
         });
-        free.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        final DroppyMenuPopup.Builder droppyMenuPrice = new DroppyMenuPopup.Builder(context, linearLayoutPrice);
+        droppyMenuPrice.addMenuItem(new DroppyMenuItem("Free"));
+        droppyMenuPrice.addMenuItem(new DroppyMenuItem("Paid"));
+        droppyMenuPrice.addMenuItem(new DroppyMenuItem("All"));
+        droppyMenuPrice.setOnClick(new DroppyClickCallbackInterface() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                selectedPrice = filterPricListe.get(position).toLowerCase();
+            public void call(View v, int id) {
+                selectedPrice = filterPricListe.get(id).toLowerCase();
                 page = 1;
-                try{
+                try {
                     recyclerView_Commom.smoothScrollToPosition(layoutManagerFeatured.findFirstVisibleItemPosition());
-                }catch (Exception ex){}
-
+                } catch (Exception ex) {
+                }
+                textViewPrice.setText(filterPricListe.get(id));
                 getDataFilter(context, type, page + "", selectedCategory, selectedPrice, selectedSortBy, asc_sortby);
             }
         });
-        latest.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        DroppyMenuPopup.Builder droppyMenuSortBy = new DroppyMenuPopup.Builder(context, linearLayoutSortby);
+        droppyMenuSortBy.addMenuItem(new DroppyMenuItem("Date Added"));
+        droppyMenuSortBy.addMenuItem(new DroppyMenuItem("Rating"));
+        droppyMenuSortBy.setOnClick(new DroppyClickCallbackInterface() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) {
+            public void call(View v, int id) {
+                if (id == 1) {
                     selectedSortBy = "latest";
                 } else {
                     selectedSortBy = "rating";
                 }
 
                 page = 1;
-                try{
+                try {
                     recyclerView_Commom.smoothScrollToPosition(layoutManagerFeatured.findFirstVisibleItemPosition());
-                }catch (Exception ex){}
-
+                } catch (Exception ex) {
+                }
+                textViewSortby.setText(sortbyList.get(id));
                 getDataFilter(context, type, page + "", selectedCategory, selectedPrice, selectedSortBy, asc_sortby);
-                asc_sortby = !asc_sortby;
+                asc_sortby = asc_sortby;
             }
         });
+        droppyMenuCategory.build();
+        droppyMenuPrice.build();
+        droppyMenuSortBy.build();
 
-        return view;
     }
 
     @Override
@@ -185,33 +234,38 @@ public class AppFragmentStickyFilter extends Fragment implements View.OnClickLis
         ArrayList<Category> categories = ((GlobleVariable) getActivity().getApplication()).getCategories();
         categoriesName = new ArrayList<>();
         categoriesId = new ArrayList<>();
+
         for (int i = 0; i < categories.size(); i++) {
             categoriesId.add(categories.get(i).id);
             categoriesName.add(categories.get(i).category);
         }
+        categoriesName.add("Category");
+        categoriesId.add("-1");
         sortbyList = new ArrayList<>();
-        sortbyList.add("Date Added");
         sortbyList.add("Rating");
+        sortbyList.add("Date Added");
+        sortbyList.add("Sort by");
 
         filterPricListe = new ArrayList<>();
         filterPricListe.add("Free");
         filterPricListe.add("Paid");
         filterPricListe.add("All");
+        filterPricListe.add("Price");
 
         MyCustomAdapter adapter1 = new MyCustomAdapter(getActivity(), R.layout.spinner_text_layout, categoriesName);
         MyCustomAdapter adapter2 = new MyCustomAdapter(getActivity(), R.layout.spinner_text_layout, sortbyList);
         MyCustomAdapter adapter3 = new MyCustomAdapter(getActivity(), R.layout.spinner_text_layout, filterPricListe);
-        category = (MaterialBetterSpinner) view.findViewById(R.id.category);
+     /*   category = (Spinner) view.findViewById(R.id.category);
         category.setAdapter(adapter1);
-        category.setHint(getResources().getString(R.string.category));
+        category.setSelection(categories.size());
 
-        latest = (MaterialBetterSpinner) view.findViewById(R.id.latest);
+        latest = (Spinner) view.findViewById(R.id.latest);
         latest.setAdapter(adapter2);
-        latest.setHint(getResources().getString(R.string.sort));
-        free = (MaterialBetterSpinner) view.findViewById(R.id.free);
+        latest.setSelection(sortbyList.size());
+        free = (Spinner) view.findViewById(R.id.free);
         free.setAdapter(adapter3);
-        free.setHint(getResources().getString(R.string.price));
-
+        free.setSelection(filterPricListe.size());
+*/
     }
 
     private void setupRecycleFeatured() {
@@ -285,7 +339,6 @@ public class AppFragmentStickyFilter extends Fragment implements View.OnClickLis
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
                         mSwipyRefreshLayout.setRefreshing(false);
-                        progressBarFeature.setVisibility(View.GONE);
                         if (result != null) {
                             Log.i("result app", result.toString());
                             String status = result.get("status").getAsString();
@@ -309,7 +362,7 @@ public class AppFragmentStickyFilter extends Fragment implements View.OnClickLis
                                 updateCommomAdapter(jsonArray, page);
                             }
                         } else {
-                            Log.e("result app", e.toString());
+                            Toast.makeText(context, "Something went wrong... try again", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -338,7 +391,9 @@ public class AppFragmentStickyFilter extends Fragment implements View.OnClickLis
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
                         mSwipyRefreshLayout.setRefreshing(false);
-                        progressBarFeature.setVisibility(View.GONE);
+                        progressBarMain.setVisibility(View.GONE);
+                        linearLayoutContent.setVisibility(View.VISIBLE);
+                        frameLayoutHeader.setVisibility(View.VISIBLE);
                         if (result != null) {
                             Log.i("result app", result.toString());
                             String status = result.get("status").getAsString();
@@ -369,7 +424,7 @@ public class AppFragmentStickyFilter extends Fragment implements View.OnClickLis
 
                             }
                         } else {
-                            Log.e("result app", e.toString());
+                            Toast.makeText(context, "Something went wrong... try again", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
